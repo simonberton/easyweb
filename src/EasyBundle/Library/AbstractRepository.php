@@ -6,9 +6,15 @@ namespace App\EasyBundle\Library;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 abstract class AbstractRepository extends ServiceEntityRepository
 {
+    public function __construct(RegistryInterface $registry)
+    {
+        parent::__construct($registry, $this->getEntityClass());
+    }
+
     abstract public function getEntityClass();
 
     abstract public function getFilterFields();
