@@ -1,0 +1,74 @@
+#!/bin/bash
+
+exec 1>&2
+
+ROOT_PATH=$(git rev-parse --show-toplevel)
+CHANGED_FILES=$(git diff --cached --name-status | awk '$1 != "D" { print $2 }')
+CS=""
+PASS=true
+
+# PHP VALIDATION - START
+for FILE in $CHANGED_FILES ; do
+    if [[ $FILE =~ ^src/.+\.(php|twig|yml|phtml)$ ]]; then
+        CHANGE=$(php-cs-fixer fix $ROOT_PATH/$FILE --rules=@PSR2 --dry-run --using-cache=no | sed '$ d' | cut -d ')' -f 2)
+        if [ ! -z "$CHANGE" ] ; then
+            CS="$CS\n    $FILE"
+            PASS=false
+        fi
+    fi
+done
+
+for FILE in $CHANGED_FILES ; do
+    if [[ $FILE =~ ^ws/.+\.(php|twig|yml|phtml)$ ]]; then
+        CHANGE=$(php-cs-fixer fix $ROOT_PATH/$FILE --rules=@PSR2 --dry-run --using-cache=no | sed '$ d' | cut -d ')' -f 2)
+        if [ ! -z "$CHANGE" ] ; then
+            CS="$CS\n    $FILE"
+            PASS=false
+        fi
+    fi
+done
+
+if [ ! -z "$CS" ] ; then
+    echo -e "The following files do not conform with FIG PSR-2:
+$CS
+
+Fix them in order to commit."
+    for FILE in $CS ; do
+        git reset $FILE
+    done
+fi
+
+if [ ! -z "$CS" ] ; then
+    echo -e "You can fix it with: php-cs-fixer fix FILE --rules=@PSR2 --using-cache=no"
+fi
+
+# PHP VALIDATION - END
+
+# JS VALIDATION - START
+CS=""
+for FILE in $CHANGED_FILES ; do
+    if [[ $FILE =~ ^assets/.+\.(js)$ ]]; then
+        CHANGE=$(docker run -v $ROOT_PATH:/home/app ws-node ./node_modules/.bin/eslint /home/app/$FILE | sed '$ d' | cut -d ')' -f 2)
+        if [ ! -z "$CHANGE" ] ; then
+            CS="$CS\n    $FILE \n"
+            PASS=false
+        fi
+    fi
+done
+
+if [ ! -z "$CS" ] ; then
+    echo -e "The following files do not conform with ESlint:
+$CS
+
+Fix them in order to commit."
+    for FILE in $CS ; do
+        git reset -q $FILE
+    done
+fi
+# JS VALIDATION - END
+
+if ! $PASS; then
+  exit 1
+fi
+
+exit 0

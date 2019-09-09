@@ -1,0 +1,36 @@
+version: '2'
+
+services:
+    web:
+        build: ./web
+        container_name: easy-web
+        image: easy-web
+        ports:
+            - ${APP_PORT}:80
+        volumes:
+            - ${APP_DIR}:/home/app:ro
+        links:
+            - php
+        network_mode: bridge
+
+    php:
+        build: ./php
+        container_name: easy-php
+        image: easy-php
+        links:
+            - dbserver
+        volumes:
+            - ${APP_DIR}:/home/app:cached
+        network_mode: bridge
+
+    dbserver:
+        container_name: easy-dbserver
+        image: easy-dbserver
+        build: ./dbserver
+        ports:
+         - "${DB_PORT}:3306"
+        volumes:
+            - ${APP_DB}:/var/lib/mysql
+        environment:
+            MYSQL_ALLOW_EMPTY_PASSWORD: 1
+        network_mode: bridge
