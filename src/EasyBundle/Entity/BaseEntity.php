@@ -1,11 +1,13 @@
 <?php
 
 
-namespace Easy\Core\Entity;
+namespace App\EasyBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Easy\Core\Entity\AssetImage;
-use Easy\Core\Entity\Category;
+use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
+use App\EasyBundle\Entity\AssetImage;
+use App\EasyBundle\Entity\Category;
 
 /**
  * @ORM\MappedSuperclass
@@ -50,7 +52,7 @@ abstract class BaseEntity
     private $content;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Easy\Core\Entity\AssetImage")
+     * @ORM\ManyToOne(targetEntity="App\EasyBundle\Entity\AssetImage")
      * @ORM\JoinColumn(name="main_image", referencedColumnName="image_id", nullable=true)
      */
     private $mainImage;
@@ -59,7 +61,7 @@ abstract class BaseEntity
      * @Assert\Type(type="Easy\Core\Entity\Category")
      * @Assert\NotNull()
      *
-     * @ORM\ManyToOne(targetEntity="Easy\Core\Entity\Category")
+     * @ORM\ManyToOne(targetEntity="App\EasyBundle\Entity\Category")
      * @ORM\JoinColumn(name="category", referencedColumnName="category_id", nullable=false)
      */
     private $category;

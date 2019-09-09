@@ -1,10 +1,14 @@
 <?php
 
 
-namespace Easy\Core\Entity;
+namespace App\EasyBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Entity(repositoryClass="Easy\Core\Repository\ContactRepository")
+ * @ORM\Entity(repositoryClass="App\EasyBundle\Repository\ContactRepository")
  * @ORM\Table(name="easy_core_contact")
  */
 class Contact
@@ -47,7 +51,7 @@ class Contact
     private $acceptsNotifications;
 
     /**
-     * @ORM\Column(name="contact_extra_data", type="json_array", nullable=true)
+     * @ORM\Column(name="contact_extra_data", type="text", nullable=true)
      */
     private $extraData;
 
@@ -118,12 +122,12 @@ class Contact
         return $this;
     }
 
-    public function getExtraData() : ?array
+    public function getExtraData() : ?string
     {
         return $this->extraData;
     }
 
-    public function setExtraData(?array $extraData) : Contact
+    public function setExtraData(?string $extraData) : Contact
     {
         $this->extraData = $extraData;
 
