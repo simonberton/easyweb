@@ -20,6 +20,12 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 abstract class AbstractAdminController extends BaseController
 {
+    const EVENT_CREATE_NEW_ENTITY = 'create.new_entity';
+    const EVENT_CREATE_CREATE_FORM = 'create.create_form';
+    const EVENT_EDIT_CREATE_FORM = 'edit.create_form';
+
+    protected $events = [];
+
     abstract protected function getService(): AbstractService;
 
     abstract protected function getListFields(): array;
@@ -29,6 +35,11 @@ abstract class AbstractAdminController extends BaseController
     protected function getLimit(): int
     {
         return 20;
+    }
+
+    protected function addEvent($event, \Closure $callback)
+    {
+        $this->events[$event] = $callback;
     }
 
     /**
@@ -109,21 +120,21 @@ abstract class AbstractAdminController extends BaseController
             throw new BadRequestHttpException($this->translator->trans('bad_request', [], 'ws_cms'));
         }
 
-//        if (isset($this->events[self::EVENT_CREATE_NEW_ENTITY])) {
-//            $this->events[self::EVENT_CREATE_NEW_ENTITY]($entity);
-//        }
-//
-//        if (isset($this->events[self::EVENT_CREATE_CREATE_FORM])) {
-//            $form = $this->events[self::EVENT_CREATE_CREATE_FORM]($entity);
-//        } else {
-//            $form = $this->createForm(
-//                $this->getService()->getFormClass(),
-//                $entity,
-//                [
-//                    'translation_domain' => $this->getTranslatorPrefix()
-//                ]
-//            );
-//        }
+        if (isset($this->events[self::EVENT_CREATE_NEW_ENTITY])) {
+            $this->events[self::EVENT_CREATE_NEW_ENTITY]($entity);
+        }
+
+        if (isset($this->events[self::EVENT_CREATE_CREATE_FORM])) {
+            $form = $this->events[self::EVENT_CREATE_CREATE_FORM]($entity);
+        } else {
+            $form = $this->createForm(
+                $this->getService()->getFormClass(),
+                $entity,
+                [
+                    'translation_domain' => $this->getTranslatorPrefix()
+                ]
+            );
+        }
 
         $form->handleRequest($request);
 
@@ -132,7 +143,7 @@ abstract class AbstractAdminController extends BaseController
                 try {
                     $this->getService()->create($entity);
 
-                    $this->handleImages($form, $entity);
+                   // $this->handleImages($form, $entity);
 
                     $this->addFlash('cms_success', $this->trans('create_success', [], $this->getTranslatorPrefix()));
 
@@ -146,12 +157,12 @@ abstract class AbstractAdminController extends BaseController
         }
 
 
-        return $this->render($this->getTemplate('show.html.twig'), array_merge([
+        return $this->render($this->getTemplate('show.html.twig'), [
             'form' => $form->createView(),
             'isCreate' => true,
             'trans_prefix' => $this->getTranslatorPrefix(),
             'route_prefix' => $this->getRoutePrefix(),
-        ], $extraData));
+        ]);
     }
 
     /**
@@ -293,6 +304,20 @@ abstract class AbstractAdminController extends BaseController
 
     protected function getTranslatorPrefix() : string
     {
-        return 'easy_admin';
+        return 'easy_web';
+    }
+
+    protected function getFormErrorMessagesList(FormInterface $form, int $output = 0)
+    {
+        $errors = [];
+        foreach ($form->getErrors(true) as $error) {
+            $errors[] = $error->getMessage();
+        }
+
+        if ($output == 0) {
+            return implode(PHP_EOL, $errors);
+        }
+
+        return $errors;
     }
 }

@@ -6,6 +6,7 @@ namespace App\EasyBundle\Form\Admin;
 use App\EasyBundle\Entity\BaseEntity;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -21,6 +22,20 @@ class BaseForm extends AbstractType
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'form.title.placeholder'
+                ]
+            ])
+            ->add('description', TextType::class, [
+                'label' => 'form.description.label',
+                'required' => true,
+                'attr' => [
+                    'placeholder' => 'form.description.placeholder'
+                ]
+            ])
+            ->add('content', TextareaType::class, [
+                'label' => 'form.content.label',
+                'required' => true,
+                'attr' => [
+                    'placeholder' => 'form.content.placeholder'
                 ]
             ])
             ->add('slug', TextType::class, [

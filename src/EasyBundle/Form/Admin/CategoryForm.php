@@ -3,8 +3,6 @@
 
 namespace App\EasyBundle\Form\Admin;
 
-
-use App\EasyBundle\Entity\BaseEntity;
 use App\EasyBundle\Entity\Category;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 

@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 use App\EasyBundle\Entity\AssetImage;
-use App\EasyBundle\Entity\Category;
 
 /**
  * @ORM\MappedSuperclass
@@ -36,7 +35,7 @@ abstract class BaseEntity
      * @Assert\Length(max=128)
      *
      * @ORM\Column(name="slug", type="string", length=128, nullable=false)
-     * @Gedmo\Slug(updatable=false, unique=true, unique_base="domain", fields={"title"})
+     * @Gedmo\Slug(updatable=false, unique=true, fields={"title"})
      */
     private $slug;
 
@@ -56,15 +55,6 @@ abstract class BaseEntity
      * @ORM\JoinColumn(name="main_image", referencedColumnName="image_id", nullable=true)
      */
     private $mainImage;
-
-    /**
-     * @Assert\Type(type="Easy\Core\Entity\Category")
-     * @Assert\NotNull()
-     *
-     * @ORM\ManyToOne(targetEntity="App\EasyBundle\Entity\Category")
-     * @ORM\JoinColumn(name="category", referencedColumnName="category_id", nullable=false)
-     */
-    private $category;
 
     /**
      * @Assert\DateTime()
@@ -93,12 +83,12 @@ abstract class BaseEntity
         return $this->id;
     }
 
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    public function getSlug(): string
+    public function getSlug(): ?string
     {
         return $this->slug;
     }
@@ -142,18 +132,6 @@ abstract class BaseEntity
     public function setMainImage(?AssetImage $mainImage): self
     {
         $this->mainImage = $mainImage;
-
-        return $this;
-    }
-
-    public function getCategory(?Category $category): ?Category
-    {
-        return $this->category;
-    }
-
-    public function setCategory(Category $category): self
-    {
-        $this->category = $category;
 
         return $this;
     }
