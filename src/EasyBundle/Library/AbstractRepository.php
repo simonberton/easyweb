@@ -3,6 +3,7 @@
 
 namespace App\EasyBundle\Library;
 
+use App\EasyBundle\Entity\BaseEntity;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -81,6 +82,41 @@ abstract class AbstractRepository extends ServiceEntityRepository
     }
 
     /**
+     * @param string $slug
+     *
+     * @return mixed
+     */
+    public function getAvailableBySlug(string $slug)
+    {
+        $alias = 'j';
+        $qb = $this->createQueryBuilder($alias);
+
+        $qb->andWhere(sprintf('%s.slug = :slug', $alias))
+            ->setParameter('slug', $slug);
+
+        $this->setPublishingRestriction($alias, $qb);
+
+        $qb->setMaxResults(1);
+
+        try {
+            return $qb->getQuery()->getOneOrNullResult();
+
+        } catch (NonUniqueResultException $e) {
+            return null;
+        }
+    }
+
+    protected function setPublishingRestriction(string $alias, QueryBuilder &$qb)
+    {
+        $qb
+            ->andWhere(sprintf('%s.publishStatus = :status', $alias))
+            ->andWhere(sprintf('%s.publishSince <= :today OR %s.publishSince IS NULL', $alias, $alias))
+            ->andWhere(sprintf('%s.publishUntil >= :today OR %s.publishUntil IS NULL', $alias, $alias))
+            ->setParameter('today', date('Y-m-d h:i:s'))
+            ->setParameter('status', BaseEntity::STATUS_PUBLISHED);
+    }
+
+    /**
      * @param string $alias
      * @param QueryBuilder $qb
      * @param string $filter
@@ -90,7 +126,6 @@ abstract class AbstractRepository extends ServiceEntityRepository
         if (!$filter) {
             return;
         }
-
         foreach ($this->getFilterFields() as $field) {
             $qb->orWhere(sprintf('%s LIKE :%s_filter', sprintf('%s.%s', $alias, $field), $field));
             $qb->setParameter(sprintf('%s_filter', $field), sprintf('%%%s%%', $filter));

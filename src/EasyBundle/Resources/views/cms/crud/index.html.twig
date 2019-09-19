@@ -1,0 +1,126 @@
+{% extends('@Easy/cms/layout.html.twig') %}
+
+{#{% page_configuration {#}
+{#    'title': 'title'|trans([], trans_prefix),#}
+{#    'header': 'title'|trans([], trans_prefix),#}
+{#    'breadcrumbs': {#}
+{#    ('title'|trans([], trans_prefix)): false,#}
+{#}#}
+{#    } %}#}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="wrapper wrapper-content animated fadeInRight faster">
+
+            <div class="row">
+                <div class="col-sm-12">
+                    {# old filter #}
+                    {% block crud_filter %}
+                        <div class="ibox">
+                            <div class="ibox-content p-xs">
+                                <div class="ibox-content theme-filter">
+                                    <form id="user_filter_form" role="form" accept-charset="UTF-8">
+                                        <div class="row">
+                                            <div class="col-md-9 col-sd-10">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="form-group">
+                                                            <input class="form-control" placeholder="{{ 'search'|trans({}, 'easy_cms') }}" type="text" name="f" value="{{ app.request.get('f') }}" autocomplete="off">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-sd-2">
+                                                <div class="form-group">
+                                                    <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> {{ 'search'|trans({}, 'easy_cms') }}</button>
+                                                    <a href="{{ path('admin_category_create') }}" class="btn btn-info"><i class="fa fa-plus"></i> {{ 'new'|trans({}, 'easy_cms') }}</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    {% endblock %}
+                    {# end old filter #}
+                </div>
+            </div>
+
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">{{ 'crud.list_entity'|trans({}, 'easy_cms') }}</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    {% if(paginationData.currentCount == 0) %}
+                                        {{ 'crud.no_results'|trans({}, 'easy_cms') }}
+                                    {% else %}
+
+                                        <table class="table table-bordered dataTable">
+                                            <thead>
+                                            <tr>
+                                                {% for field in list_fields %}
+                                                    <th {% if field.width is defined %}width="{{ field.width }}"{% endif %}>
+                                                        {% if field.sortable %}
+                                                            <a href="?sort={{ field.name }}&dir={{ dir == 'asc' ? 'desc' : 'asc' }}{{ filter ? "&f=#{filter}" : '' }}">
+                                                                {{ "fields.#{field.name}.label"|trans([]) }} <i class="fas fa-sort{{ sort == field.name ? (dir == 'asc' ? '-up' : '-down') : '' }}"></i>
+                                                            </a>
+                                                        {% else %}
+                                                            {{ "fields.#{field.name}.label"|trans([]) }}
+                                                        {% endif %}
+                                                    </th>
+                                                {% endfor %}
+                                                <th width="125">{{ 'actions'|trans({}, 'easy_cms') }}</th>
+                                            </tr>
+                                            </thead>
+
+                                            {% block crud_table_body %}
+                                                <tbody>
+                                                {% for entity in data %}
+                                                    <tr class="js-genericDelete_wrapper" data-id="{{ entity.id }}">
+                                                        {% for field in list_fields %}
+                                                            <td>
+                                                                <a href="{{ path("#{route_prefix}_edit", { 'id': entity.id }) }}">
+                                                                    {% if field.isDate|default(false) %}
+                                                                        {% if attribute(entity, field.name) is null %}
+                                                                            -
+                                                                        {% else %}
+                                                                            {{ attribute(entity, field.name)|date('date_hour_format'|trans({}, 'easy_cms')) }}
+                                                                        {% endif %}
+                                                                    {% else %}
+                                                                        {{ attribute(entity, field.name) }}
+                                                                    {% endif %}
+                                                                </a>
+                                                            </td>
+                                                        {% endfor %}
+                                                        <td>
+                                                            <button class="btn btn-xs btn-danger js-genericDelete"
+                                                                    data-id="{{ entity.id }}"
+                                                                    data-url="{{ path("#{route_prefix}_delete", { 'id': entity.id }) }}"
+                                                                    data-title="{{ 'title'|trans([]) }}"
+                                                                    data-message="{{ 'delete_warning'|trans([]) }}">
+                                                                <i class="fas fa-trash-alt"></i> {{ 'delete'|trans({}, 'easy_cms') }}
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            {% endblock %}
+
+                                        </table>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="row">
+                                {{ include('@Easy/cms/crud/pagination.html.twig', paginationData|merge({ 'params': params }), with_context = false) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

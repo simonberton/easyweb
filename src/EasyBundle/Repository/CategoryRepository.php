@@ -17,6 +17,6 @@ class CategoryRepository extends AbstractRepository
 
     public function getFilterFields()
     {
-        return ['id'];
+        return ['title'];
     }
 }

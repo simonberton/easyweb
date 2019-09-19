@@ -25,6 +25,8 @@ abstract class AbstractService
 
     abstract public function getSortFields() : array;
 
+    abstract public function getListFields() : array;
+
     public function getEntity()
     {
         try {
@@ -60,6 +62,15 @@ abstract class AbstractService
         $total = $this->repository->getAllCount($filter);
 
         return ['total' => $total, 'data' => $entities];
+    }
+
+    /**
+     * @param string $slug
+     * @return mixed
+     */
+    public function getAvailableBySlug(string $slug)
+    {
+        return $this->repository->getAvailableBySlug($slug);
     }
 
     /**

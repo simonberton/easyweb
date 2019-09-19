@@ -10,11 +10,26 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
-abstract class AbstractController extends BaseController
+/**
+ * @Route("/admin", name="easy_admin_")
+ *
+ * @param Request $request
+ *
+ * @return Response
+ * @throws \Exception
+ */
+abstract class AbstractAdminController extends BaseController
 {
-    abstract protected function getService() : AbstractService;
+    abstract protected function getService(): AbstractService;
 
-    abstract protected function getListFields() : array;
+    abstract protected function getListFields(): array;
+
+    abstract protected function getRoutePrefix(): string;
+
+    protected function getLimit(): int
+    {
+        return 20;
+    }
 
     /**
      * @Route("/", name="index")
@@ -24,28 +39,28 @@ abstract class AbstractController extends BaseController
      * @return Response
      * @throws \Exception
      */
-    public function index(Request $request) : Response
+    public function index(Request $request): Response
     {
-        $this->denyAccessUnlessAllowed('view');
+//        $this->denyAccessUnlessAllowed('view');
 
-        $page = (int) $request->get('page', 1);
+        $page = (int)$request->get('page', 1);
         if ($page < 1) {
             $page = 1;
         }
 
-        $limit = (int) $request->get('limit', $this->getLimit());
+        $limit = (int)$request->get('limit', $this->getLimit());
         if (!$limit) {
             $limit = $this->getLimit();
         }
 
-        $filter = (string) $request->get('f');
+        $filter = (string)$request->get('f');
 
         $data = $this->getService()->getAll($filter, $page, $limit, (string)$request->get('sort'), (string)$request->get('dir'));
 
         $paginationData = [
             'currentPage' => $page,
             'url' => $request->get('_route'),
-            'nbPages' => ceil($data['total']/$limit),
+            'nbPages' => ceil($data['total'] / $limit),
             'currentCount' => count($data['data']),
             'totalCount' => $data['total'],
             'limit' => $limit
@@ -59,12 +74,6 @@ abstract class AbstractController extends BaseController
                 $field['sortable'] = true;
             }
         }
-
-        $extraData = [];
-        if (isset($this->events[self::EVENT_INDEX_EXTRA_DATA])) {
-            $extraData = $this->events[self::EVENT_INDEX_EXTRA_DATA]();
-        }
-
         return $this->render(
             $this->getTemplate('index.html.twig'),
             array_merge(
@@ -76,10 +85,9 @@ abstract class AbstractController extends BaseController
                     'params' => $request->query->all(),
                     'filter' => $filter,
                     'trans_prefix' => $this->getTranslatorPrefix(),
-                    'route_prefix' => $this->getRouteNamePrefix(),
+                    'route_prefix' => $this->getRoutePrefix(),
                     'list_fields' => $listFields,
-                ],
-                $extraData
+                ]
             )
         );
     }
@@ -92,30 +100,30 @@ abstract class AbstractController extends BaseController
      * @return Response
      * @throws \Exception
      */
-    public function create(Request $request) : Response
+    public function create(Request $request): Response
     {
-        $this->denyAccessUnlessAllowed('create');
+        //$this->denyAccessUnlessAllowed('create');
 
         $entity = $this->getService()->getEntity();
         if ($entity === null) {
             throw new BadRequestHttpException($this->translator->trans('bad_request', [], 'ws_cms'));
         }
 
-        if (isset($this->events[self::EVENT_CREATE_NEW_ENTITY])) {
-            $this->events[self::EVENT_CREATE_NEW_ENTITY]($entity);
-        }
-
-        if (isset($this->events[self::EVENT_CREATE_CREATE_FORM])) {
-            $form = $this->events[self::EVENT_CREATE_CREATE_FORM]($entity);
-        } else {
-            $form = $this->createForm(
-                $this->getService()->getFormClass(),
-                $entity,
-                [
-                    'translation_domain' => $this->getTranslatorPrefix()
-                ]
-            );
-        }
+//        if (isset($this->events[self::EVENT_CREATE_NEW_ENTITY])) {
+//            $this->events[self::EVENT_CREATE_NEW_ENTITY]($entity);
+//        }
+//
+//        if (isset($this->events[self::EVENT_CREATE_CREATE_FORM])) {
+//            $form = $this->events[self::EVENT_CREATE_CREATE_FORM]($entity);
+//        } else {
+//            $form = $this->createForm(
+//                $this->getService()->getFormClass(),
+//                $entity,
+//                [
+//                    'translation_domain' => $this->getTranslatorPrefix()
+//                ]
+//            );
+//        }
 
         $form->handleRequest($request);
 
@@ -137,16 +145,12 @@ abstract class AbstractController extends BaseController
             }
         }
 
-        $extraData = [];
-        if (isset($this->events[self::EVENT_CREATE_EXTRA_DATA])) {
-            $extraData = $this->events[self::EVENT_CREATE_EXTRA_DATA]();
-        }
 
         return $this->render($this->getTemplate('show.html.twig'), array_merge([
             'form' => $form->createView(),
             'isCreate' => true,
             'trans_prefix' => $this->getTranslatorPrefix(),
-            'route_prefix' => $this->getRouteNamePrefix(),
+            'route_prefix' => $this->getRoutePrefix(),
         ], $extraData));
     }
 
@@ -159,7 +163,7 @@ abstract class AbstractController extends BaseController
      * @return Response
      * @throws \Exception
      */
-    public function edit(Request $request, int $id) : Response
+    public function edit(Request $request, int $id): Response
     {
         $this->denyAccessUnlessAllowed('edit');
 
@@ -209,7 +213,7 @@ abstract class AbstractController extends BaseController
             'form' => $form->createView(),
             'isCreate' => false,
             'trans_prefix' => $this->getTranslatorPrefix(),
-            'route_prefix' => $this->getRouteNamePrefix(),
+            'route_prefix' => $this->getRoutePrefix(),
         ], $extraData));
     }
 
@@ -221,7 +225,7 @@ abstract class AbstractController extends BaseController
      *
      * @return Response
      */
-    public function delete(Request $request, int $id) : Response
+    public function delete(Request $request, int $id): Response
     {
         try {
             $this->denyAccessUnlessAllowed('delete');
@@ -256,5 +260,39 @@ abstract class AbstractController extends BaseController
                 'msg' => $this->trans('delete_failed', [], 'ws_cms')
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+    }
+
+    protected function getTemplate($template, $entity = null): string
+    {
+        if ($this->useCRUDTemplate($template)) {
+            return sprintf('@Easy/cms/crud/%s', $template);
+        }
+
+        $routePrefix = '';
+        $controllerClass = get_class($this);
+        $classPath = explode('\\', $controllerClass);
+
+        if ($classPath[0] === 'EASY') {
+            $controllerName = strtolower(str_replace('Controller', '', $classPath[4]));
+            $routePrefix = sprintf('@%s%s/%s/%s', $classPath[0], $classPath[1], strtolower($classPath[3]), $controllerName);
+        }
+    }
+
+    protected function useCRUDTemplate($template) : bool
+    {
+        if ($template == 'index.html.twig') {
+            return true;
+        }
+
+        if ($template == 'show.html.twig') {
+            return true;
+        }
+
+        return false;
+    }
+
+    protected function getTranslatorPrefix() : string
+    {
+        return 'easy_admin';
     }
 }

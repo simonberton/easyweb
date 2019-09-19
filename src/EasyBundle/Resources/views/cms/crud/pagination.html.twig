@@ -1,0 +1,37 @@
+{% if nbPages > 1 %}
+    {% set nearbyPagesLimit = 4 %}
+    <div class="col-sm-12 col-md-5">
+        <div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">
+            {{ 'pagination.info'|trans({'%count%': totalCount, '%from%': ((currentPage - 1) * limit) + 1, '%to%': ((currentPage - 1) * limit) + currentCount }, 'easy_cms') }}
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-7">
+        <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+            <ul class="pagination">
+                {% if currentPage != 1 %}
+                    <li><a href="{{ path(url, params|merge({'page': 1})) }}">{{ 'pagination.first'|trans({}, 'easy_cms') }}</a></li>
+                {% endif %}
+
+                {% for i in 1..nbPages %}
+                    {% if 0 == (currentPage - nearbyPagesLimit) - loop.index %} {# dot before #}
+                        <li class="disabled"><a href="#">...</a></li>
+                    {% elseif 0 == (currentPage + nearbyPagesLimit) - loop.index %} {# dot after #}
+                        <li class="disabled"><a href="#">...</a></li>
+                    {% elseif 0 < (currentPage - nearbyPagesLimit) - loop.index %} {# hide all before #}
+                    {% elseif 0 > (currentPage + nearbyPagesLimit) - loop.index %} {# hide all after #}
+                    {% else %}
+                        <li {% if currentPage == loop.index %} class="active"{% endif %}>
+                            <a href="{{ path(url, params|merge({'page': loop.index})) }}">{{ loop.index }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if currentPage != nbPages %}
+                    <li>
+                        <a href="{{ path(url, params|merge({'page': nbPages})) }}">{{ 'pagination.last'|trans({}, 'easy_cms') }}</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+{% endif %}

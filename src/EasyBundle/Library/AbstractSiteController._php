@@ -1,0 +1,34 @@
+<?php
+
+use App\EasyBundle\Entity\BaseEntity;
+use App\EasyBundle\Library\AbstractService;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as BaseController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
+abstract class AbstractSiteController extends BaseController
+{
+    const LIMIT = 6;
+
+    abstract protected function getService(): AbstractService;
+
+    public function index() : Response
+    {
+        return $this->render('obj/index.html.twig', [
+            'jobs' => $this->getService()->getAvailable($this::LIMIT)
+        ]);
+    }
+
+    public function detail(string $slug)
+    {
+        $obj = $this->getService()->getAvailableBySlug($slug);
+        if (!$obj instanceof BaseEntity) {
+            throw new NotFoundHttpException();
+        }
+
+        return $this->render('obj/detail.html.twig', [
+            'obj$object' => $obj
+        ]);
+    }
+
+}
