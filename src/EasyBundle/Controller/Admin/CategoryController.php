@@ -8,6 +8,7 @@ use App\EasyBundle\Library\AbstractAdminController;
 use App\EasyBundle\Library\AbstractService;
 use App\EasyBundle\Service\CategoryService;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Route("/category", name="admin_category_")
@@ -16,11 +17,11 @@ class CategoryController extends AbstractAdminController
 {
     protected $service;
 
-    public function __construct(CategoryService $service)
+    public function __construct(CategoryService $categoryService, TranslatorInterface $translator)
     {
-        $this->service = $service;
+        $this->service = $categoryService;
 
-       // parent::__construct($translator, $imageService);
+       parent::__construct($translator);
     }
 
     protected function getService(): AbstractService

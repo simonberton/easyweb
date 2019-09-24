@@ -57,16 +57,14 @@ abstract class BaseEntity
     private $mainImage;
 
     /**
-     * @Assert\DateTime()
      *
-     * @ORM\Column(name="publish_since", type="datetime", nullable=true)
+     * @ORM\Column(name="publish_since", type="text", nullable=true)
      */
     private $publishSince;
 
     /**
-     * @Assert\DateTime()
      *
-     * @ORM\Column(name="publish_until", type="datetime", nullable=true)
+     * @ORM\Column(name="publish_until", type="text", nullable=true)
      */
     private $publishUntil;
 
@@ -86,6 +84,13 @@ abstract class BaseEntity
     public function getTitle(): ?string
     {
         return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
     }
 
     public function getSlug(): ?string
@@ -148,24 +153,24 @@ abstract class BaseEntity
         return $this;
     }
 
-    public function getPublishSince(): ?\DateTimeInterface
+    public function getPublishSince(): ?string
     {
         return $this->publishSince;
     }
 
-    public function setPublishSince(?\DateTimeInterface $publishSince): self
+    public function setPublishSince(?string $publishSince): self
     {
         $this->publishSince = $publishSince;
 
         return $this;
     }
 
-    public function getPublishUntil(): ?\DateTimeInterface
+    public function getPublishUntil(): ?string
     {
         return $this->publishUntil;
     }
 
-    public function setPublishUntil(?\DateTimeInterface $publishUntil): self
+    public function setPublishUntil(?string $publishUntil): self
     {
         $this->publishUntil = $publishUntil;
 

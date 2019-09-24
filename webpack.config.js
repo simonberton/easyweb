@@ -64,7 +64,7 @@ Encore
     //.enableIntegrityHashes(Encore.isProduction())
 
     // uncomment if you're having problems with a jQuery plugin
-    //.autoProvidejQuery()
+    .autoProvidejQuery()
 //    .addStyleEntry('font-awesome', './assets/css/font-awesome/all.min.css')
     // uncomment if you use API Platform Admin (composer req api-admin)
     //.enableReactPreset()

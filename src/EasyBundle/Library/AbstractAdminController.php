@@ -3,12 +3,14 @@
 
 namespace App\EasyBundle\Library;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as BaseController;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as BaseController;
 
 /**
  * @Route("/admin", name="easy_admin_")
@@ -25,6 +27,12 @@ abstract class AbstractAdminController extends BaseController
     const EVENT_EDIT_CREATE_FORM = 'edit.create_form';
 
     protected $events = [];
+    protected $translator;
+
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
 
     abstract protected function getService(): AbstractService;
 
@@ -42,6 +50,11 @@ abstract class AbstractAdminController extends BaseController
         $this->events[$event] = $callback;
     }
 
+    public function trans($id, array $parameters = array(), $domain = null, $locale = null)
+    {
+        return $this->translator->trans($id, $parameters, $domain, $locale);
+    }
+
     /**
      * @Route("/", name="index")
      *
@@ -52,8 +65,6 @@ abstract class AbstractAdminController extends BaseController
      */
     public function index(Request $request): Response
     {
-//        $this->denyAccessUnlessAllowed('view');
-
         $page = (int)$request->get('page', 1);
         if ($page < 1) {
             $page = 1;
@@ -113,8 +124,6 @@ abstract class AbstractAdminController extends BaseController
      */
     public function create(Request $request): Response
     {
-        //$this->denyAccessUnlessAllowed('create');
-
         $entity = $this->getService()->getEntity();
         if ($entity === null) {
             throw new BadRequestHttpException($this->translator->trans('bad_request', [], 'ws_cms'));
@@ -143,11 +152,9 @@ abstract class AbstractAdminController extends BaseController
                 try {
                     $this->getService()->create($entity);
 
-                   // $this->handleImages($form, $entity);
-
                     $this->addFlash('cms_success', $this->trans('create_success', [], $this->getTranslatorPrefix()));
 
-                    return $this->redirect($this->generateUrl($this->getRouteNamePrefix() . '_index'));
+                    return $this->redirect($this->generateUrl($this->getRoutePrefix() . '_index'));
                 } catch (\Exception $e) {
                     $this->addFlash('cms_error', $this->trans('create_error', [], $this->getTranslatorPrefix()));
                 }
@@ -176,7 +183,7 @@ abstract class AbstractAdminController extends BaseController
      */
     public function edit(Request $request, int $id): Response
     {
-        $this->denyAccessUnlessAllowed('edit');
+        //$this->denyAccessUnlessAllowed('edit');
 
         $entity = $this->getService()->get($id);
         if ($entity === null || get_class($entity) !== $this->getService()->getEntityClass()) {
@@ -202,11 +209,9 @@ abstract class AbstractAdminController extends BaseController
                 try {
                     $this->getService()->edit($entity);
 
-                    $this->handleImages($form, $entity);
-
                     $this->addFlash('cms_success', $this->trans('edit_success', [], $this->getTranslatorPrefix()));
 
-                    return $this->redirect($this->generateUrl($this->getRouteNamePrefix() . '_index'));
+                    return $this->redirect($this->generateUrl($this->getRoutePrefix() . '_index'));
                 } catch (\Exception $e) {
                     $this->addFlash('cms_error', $this->trans('edit_error', [], $this->getTranslatorPrefix()));
                 }
@@ -215,17 +220,14 @@ abstract class AbstractAdminController extends BaseController
             }
         }
 
-        $extraData = [];
-        if (isset($this->events[self::EVENT_EDIT_EXTRA_DATA])) {
-            $extraData = $this->events[self::EVENT_EDIT_EXTRA_DATA]();
-        }
-
-        return $this->render($this->getTemplate('show.html.twig'), array_merge([
-            'form' => $form->createView(),
-            'isCreate' => false,
-            'trans_prefix' => $this->getTranslatorPrefix(),
-            'route_prefix' => $this->getRoutePrefix(),
-        ], $extraData));
+        return $this->render($this->getTemplate('show.html.twig'),
+            [
+                'form' => $form->createView(),
+                'isCreate' => false,
+                'trans_prefix' => $this->getTranslatorPrefix(),
+                'route_prefix' => $this->getRoutePrefix(),
+            ]
+        );
     }
 
     /**
@@ -238,12 +240,6 @@ abstract class AbstractAdminController extends BaseController
      */
     public function delete(Request $request, int $id): Response
     {
-        try {
-            $this->denyAccessUnlessAllowed('delete');
-        } catch (AccessDeniedException $exception) {
-            return $this->json(['msg' => $this->trans('not_allowed', [], 'ws_cms')], Response::HTTP_FORBIDDEN);
-        }
-
         if (!$request->isXmlHttpRequest()) {
             return $this->json(
                 ['msg' => $this->translator->trans('bad_request', [], 'ws_cms')],
@@ -307,7 +303,7 @@ abstract class AbstractAdminController extends BaseController
         return 'easy_web';
     }
 
-    protected function getFormErrorMessagesList(FormInterface $form, int $output = 0)
+    protected function getFormErrorMessagesList(Form $form, int $output = 0)
     {
         $errors = [];
         foreach ($form->getErrors(true) as $error) {

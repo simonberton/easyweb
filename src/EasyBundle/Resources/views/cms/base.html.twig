@@ -176,21 +176,27 @@
 </a>
 
 <!-- Bootstrap core JavaScript-->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+{#<script src="vendor/jquery/jquery.min.js"></script>#}
+{#<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>#}
 
-<!-- Core plugin JavaScript-->
-<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+{#<!-- Core plugin JavaScript-->#}
+{#<script src="vendor/jquery-easing/jquery.easing.min.js"></script>#}
 
-<!-- Custom scripts for all pages-->
-<script src="js/sb-admin-2.min.js"></script>
+{#<!-- Custom scripts for all pages-->#}
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
 
-<!-- Page level plugins -->
-<script src="vendor/chart.js/Chart.min.js"></script>
+    <!-- Renders app.js & a webpack runtime.js file
+        <script src="/build/runtime.js"></script>
+        <script src="/build/app.js"></script> -->
+{% endblock %}
 
-<!-- Page level custom scripts -->
-<script src="js/demo/chart-area-demo.js"></script>
-<script src="js/demo/chart-pie-demo.js"></script>
+{#<!-- Page level plugins -->#}
+{#<script src="vendor/chart.js/Chart.min.js"></script>#}
+
+{#<!-- Page level custom scripts -->#}
+{#<script src="js/demo/chart-area-demo.js"></script>#}
+{#<script src="js/demo/chart-pie-demo.js"></script>#}
 
 </body>
 

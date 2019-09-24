@@ -9,7 +9,6 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BaseForm extends AbstractType
@@ -62,18 +61,24 @@ class BaseForm extends AbstractType
 
         $builder
             ->add('publishStatus', ChoiceType::class, [
-                'translation_domain' => 'ws_cms_editorial',
+                'translation_domain' => 'easy_cms_editorial',
                 'label' => 'publishing.publishStatus.label',
                 'choices' => $publishingOptions,
                 'attr' => [
-                    'data-component' => 'ws_select'
+                    'data-component' => 'easy_select'
                 ],
             ])
-            ->add('publishSince', DateTimeType::class, [
-                'label' => 'publishing.publishSince.label'
+            ->add('publishSince', TextType::class, [
+                'label' => 'publishing.publishSince.label',
+                'attr' => [
+                    'class' => 'js-datePicker'
+                ]
             ])
-            ->add('publishUntil', DateTimeType::class, [
-                'label' => 'publishing.publishUntil.label'
+            ->add('publishUntil', TextType::class, [
+                'label' => 'publishing.publishUntil.label',
+                'attr' => [
+                    'class' => 'js-datePicker'
+                ]
             ]);
     }
 
