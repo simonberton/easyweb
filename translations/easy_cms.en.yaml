@@ -15,6 +15,13 @@ crud.list_fields.slug.label: Slug
 crud.list_fields.title.label: Title
 crud.list_fields.publishStatus.label: Status
 crud.list.delete: Delete
+crud.pagination.info: Showing one element.|Showing %from% to %to% of %count% elements.
+crud.pagination.first: First
+crud.pagination.last: Last
+
+crud.list.delete_title: You are about to delete, be careful
+crud.list.delete_warning: Are you sure you want to delete?
+crud.alert.cancel.confirm: Deleted successfully
 
 publishing.publishUntil.label: Publish Until
 publishing.publishSince.label: Published Since
@@ -27,3 +34,6 @@ cancel: Cancel
 save: Save
 search: Search
 new: New
+
+delete_success_title: Object deleted successfuly
+delete_success_message: Object and all relations deleted

@@ -181,10 +181,18 @@
 
 {#<!-- Core plugin JavaScript-->#}
 {#<script src="vendor/jquery-easing/jquery.easing.min.js"></script>#}
-
+<script type="text/javascript">
+  window.cmsTranslations = {
+    cancel: '{{ 'crud.list.delete_title'|trans({}, 'easy_cms') }}',
+    delete: {
+      confirm: '{{ 'crud.alert.cancel.confirm'|trans({}, 'easy_cms') }}',
+    }
+  };
+</script>
 {#<!-- Custom scripts for all pages-->#}
 {% block javascripts %}
     {{ encore_entry_script_tags('app') }}
+    {{ encore_entry_script_tags('admin') }}
 
     <!-- Renders app.js & a webpack runtime.js file
         <script src="/build/runtime.js"></script>

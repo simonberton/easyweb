@@ -23,7 +23,7 @@ class CategoryService extends AbstractService
 
     public function getSortFields(): array
     {
-        return ['title'];
+        return ['title', 'publishStatus'];
     }
 
     public function getListFields(): array

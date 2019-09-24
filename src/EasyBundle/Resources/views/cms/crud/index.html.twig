@@ -100,8 +100,8 @@
                                                             <button class="btn btn-xs btn-danger js-genericDelete"
                                                                     data-id="{{ entity.id }}"
                                                                     data-url="{{ path("#{route_prefix}_delete", { 'id': entity.id }) }}"
-                                                                    data-title="{{ 'title'|trans([]) }}"
-                                                                    data-message="{{ 'crud.list.delete_warning'|trans([]) }}">
+                                                                    data-title="{{ 'crud.list.delete_title'|trans({},  'easy_cms') }}"
+                                                                    data-message="{{ 'crud.list.delete_warning'|trans({}, 'easy_cms') }}">
                                                                 <i class="fas fa-trash-alt"></i> {{ 'crud.list.delete'|trans({}, 'easy_cms') }}
                                                             </button>
                                                         </td>

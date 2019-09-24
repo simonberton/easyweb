@@ -42,7 +42,7 @@ abstract class AbstractAdminController extends BaseController
 
     protected function getLimit(): int
     {
-        return 20;
+        return 5;
     }
 
     protected function addEvent($event, \Closure $callback)
@@ -259,8 +259,8 @@ abstract class AbstractAdminController extends BaseController
 
             return $this->json([
                 'id' => $id,
-                'title' => $this->trans('delete_title_success', [], 'easy_cms'),
-                'msg' => $this->trans('delete_success', [], $this->getTranslatorPrefix()),
+                'title' => $this->trans('delete_success_title', [], 'easy_cms'),
+                'msg' => $this->trans('delete_success_message', [], $this->getTranslatorPrefix()),
             ], Response::HTTP_OK);
         } catch (\Exception $e) {
             return $this->json([
