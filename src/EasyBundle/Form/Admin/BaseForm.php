@@ -17,32 +17,32 @@ class BaseForm extends AbstractType
     {
         $builder
             ->add('title', TextType::class, [
-                'label' => 'form.title.label',
+                'label' => 'crud.form.title.label',
                 'required' => true,
                 'attr' => [
-                    'placeholder' => 'form.title.placeholder'
+                    'placeholder' => 'crud.form.title.placeholder'
                 ]
             ])
             ->add('description', TextType::class, [
-                'label' => 'form.description.label',
+                'label' => 'crud.form.description.label',
                 'required' => true,
                 'attr' => [
-                    'placeholder' => 'form.description.placeholder'
+                    'placeholder' => 'crud.form.description.placeholder'
                 ]
             ])
             ->add('content', TextareaType::class, [
-                'label' => 'form.content.label',
+                'label' => 'crud.form.content.label',
                 'required' => true,
                 'attr' => [
-                    'placeholder' => 'form.content.placeholder'
+                    'placeholder' => 'crud.form.content.placeholder'
                 ]
             ])
             ->add('slug', TextType::class, [
-                'label' => 'form.slug.label',
-                'help' => 'form.slug.help',
+                'label' => 'crud.form.slug.label',
+                'help' => 'crud.form.slug.help',
                 'required' => false,
                 'attr' => [
-                    'placeholder' => 'form.slug.placeholder',
+                    'placeholder' => 'crud.form.slug.placeholder',
                 ],
             ])
         ;
@@ -61,7 +61,6 @@ class BaseForm extends AbstractType
 
         $builder
             ->add('publishStatus', ChoiceType::class, [
-                'translation_domain' => 'easy_cms_editorial',
                 'label' => 'publishing.publishStatus.label',
                 'choices' => $publishingOptions,
                 'attr' => [

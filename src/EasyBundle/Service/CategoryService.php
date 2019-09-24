@@ -30,7 +30,8 @@ class CategoryService extends AbstractService
     {
         return [
             ['name' => 'title'],
-            ['name' => 'slug']
+            ['name' => 'slug'],
+            ['name' => 'publishStatus'],
         ];
     }
 }

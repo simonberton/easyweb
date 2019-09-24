@@ -126,7 +126,7 @@ abstract class AbstractAdminController extends BaseController
     {
         $entity = $this->getService()->getEntity();
         if ($entity === null) {
-            throw new BadRequestHttpException($this->translator->trans('bad_request', [], 'ws_cms'));
+            throw new BadRequestHttpException($this->translator->trans('bad_request', [], 'cms'));
         }
 
         if (isset($this->events[self::EVENT_CREATE_NEW_ENTITY])) {
@@ -242,7 +242,7 @@ abstract class AbstractAdminController extends BaseController
     {
         if (!$request->isXmlHttpRequest()) {
             return $this->json(
-                ['msg' => $this->translator->trans('bad_request', [], 'ws_cms')],
+                ['msg' => $this->translator->trans('bad_request', [], 'easy_cms')],
                 Response::HTTP_BAD_REQUEST
             );
         }
@@ -259,12 +259,12 @@ abstract class AbstractAdminController extends BaseController
 
             return $this->json([
                 'id' => $id,
-                'title' => $this->trans('delete_title_success', [], 'ws_cms'),
+                'title' => $this->trans('delete_title_success', [], 'easy_cms'),
                 'msg' => $this->trans('delete_success', [], $this->getTranslatorPrefix()),
             ], Response::HTTP_OK);
         } catch (\Exception $e) {
             return $this->json([
-                'msg' => $this->trans('delete_failed', [], 'ws_cms')
+                'msg' => $this->trans('delete_failed', [], 'easy_cms')
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
@@ -300,7 +300,7 @@ abstract class AbstractAdminController extends BaseController
 
     protected function getTranslatorPrefix() : string
     {
-        return 'easy_web';
+        return 'easy_cms';
     }
 
     protected function getFormErrorMessagesList(Form $form, int $output = 0)

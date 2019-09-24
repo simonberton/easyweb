@@ -76,6 +76,22 @@ abstract class BaseEntity
      */
     private $publishStatus;
 
+    /**
+     * @Assert\DateTime()
+     * @Gedmo\Timestampable(on="create")
+     *
+     * @ORM\Column(name="created_at", type="datetime", nullable=false)
+     */
+    private $createdAt;
+
+    /**
+     * @Assert\DateTime()
+     * @Gedmo\Timestampable(on="update")
+     *
+     * @ORM\Column(name="modified_at", type="datetime", nullable=true)
+     */
+    private $modifiedAt;
+
     public function getId(): int
     {
         return $this->id;
@@ -173,6 +189,30 @@ abstract class BaseEntity
     public function setPublishUntil(?string $publishUntil): self
     {
         $this->publishUntil = $publishUntil;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): \DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getModifiedAt(): \DateTimeInterface
+    {
+        return $this->modifiedAt;
+    }
+
+    public function setModifiedAt(\DateTimeInterface $modifiedAt): self
+    {
+        $this->modifiedAt = $modifiedAt;
 
         return $this;
     }
