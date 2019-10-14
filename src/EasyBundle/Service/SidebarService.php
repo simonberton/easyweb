@@ -34,17 +34,17 @@ class SidebarService
                 $arrayKey = str_replace('admin_', '', $key);
                 $arrayKey = str_replace('_create', '', $arrayKey);
                 $arrayKey = str_replace('_index', '', $arrayKey);
-
+                
                 if (!isset($sidebar[$arrayKey])) {
                     $sidebar[$arrayKey][] = [
                         'name' => sprintf('%s %s',
-                            $this->translator->trans('crud.create', [], 'cms'), ucfirst($arrayKey)
+                            $this->translator->trans('crud.create', [], 'easy_cms'), ucfirst($arrayKey)
                         ),
                         'route' => $this->router->generate(sprintf('admin_%s_create', $arrayKey))
                     ];
                     $sidebar[$arrayKey][] = [
                         'name' => sprintf('%s %s',
-                            $this->translator->trans('crud.list', [], 'cms'), ucfirst($arrayKey)
+                            $this->translator->trans('crud.list', [], 'easy_cms'), ucfirst($arrayKey)
                         ),
                         'route' => $this->router->generate(sprintf('admin_%s_index', $arrayKey)),
                     ];
