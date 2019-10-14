@@ -3,7 +3,6 @@
 
 namespace App\EasyBundle\Repository;
 
-
 use App\EasyBundle\Entity\AssetImage;
 use App\EasyBundle\Library\AbstractRepository;
 

@@ -22,6 +22,7 @@ crud.pagination.last: Last
 crud.list.delete_title: You are about to delete, be careful
 crud.list.delete_warning: Are you sure you want to delete?
 crud.alert.cancel.confirm: Deleted successfully
+crud.no_results: Nothing to show here
 
 publishing.publishUntil.label: Publish Until
 publishing.publishSince.label: Published Since

@@ -25,6 +25,3 @@ import 'bootstrap-datepicker';
 if ($('.js-datePicker') !== undefined) {
   $('.js-datePicker').datepicker();
 }
-
-
-console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
