@@ -242,7 +242,7 @@ abstract class AbstractAdminController extends BaseController
     {
         if (!$request->isXmlHttpRequest()) {
             return $this->json(
-                ['msg' => $this->translator->trans('bad_request', [], 'easy_cms')],
+                ['msg' => $this->trans('bad_request', [], 'easy_cms')],
                 Response::HTTP_BAD_REQUEST
             );
         }

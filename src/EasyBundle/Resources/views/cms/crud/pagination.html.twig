@@ -25,36 +25,9 @@
                     {% endif %}
                 {% endfor %}
                 {% if currentPage != nbPages %}
-                <li class="page-item"><a class="page-link" href="{{ path(url, params|merge({'page': nbPages})) }}">{{ 'crud.pagination.last'|trans({}, 'easy_cms') }}</a></li>
+                    <li class="page-item"><a class="page-link" href="{{ path(url, params|merge({'page': nbPages})) }}">{{ 'crud.pagination.last'|trans({}, 'easy_cms') }}</a></li>
                 {% endif %}
             </ul>
         </nav>
-{#        <div class="dataTables_paginate paging_simple_numbers" id="dataTabe_paginate">#}
-{#            <ul class="pagination">#}
-{#                {% if currentPage != 1 %}#}
-{#                    <li><a href="{{ path(url, params|merge({'page': 1})) }}">{{ 'crud.pagination.first'|trans({}, 'easy_cms') }}</a></li>#}
-{#                {% endif %}#}
-
-{#                {% for i in 1..nbPages %}#}
-{#                    {% if 0 == (currentPage - nearbyPagesLimit) - loop.index %}  dot before#}
-{#                        <li class="disabled"><a href="#">...</a></li>#}
-{#                    {% elseif 0 == (currentPage + nearbyPagesLimit) - loop.index %}  dot after#}
-{#                        <li class="disabled"><a href="#">...</a></li>#}
-{#                    {% elseif 0 < (currentPage - nearbyPagesLimit) - loop.index %}  hide all before#}
-{#                    {% elseif 0 > (currentPage + nearbyPagesLimit) - loop.index %}  hide all after#}
-{#                    {% else %}#}
-{#                        <li {% if currentPage == loop.index %} class="active"{% endif %}>#}
-{#                            <a href="{{ path(url, params|merge({'page': loop.index})) }}">{{ loop.index }}</a>#}
-{#                        </li>#}
-{#                    {% endif %}#}
-{#                {% endfor %}#}
-
-{#                {% if currentPage != nbPages %}#}
-{#                    <li>#}
-{#                        <a href="{{ path(url, params|merge({'page': nbPages})) }}">{{ 'crud.pagination.last'|trans({}, 'easy_cms') }}</a>#}
-{#                    </li>#}
-{#                {% endif %}#}
-{#            </ul>#}
-{#        </div>#}
     </div>
 {% endif %}
