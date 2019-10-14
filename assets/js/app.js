@@ -10,6 +10,8 @@ require('../css/app.css');
 
 require('@fortawesome/fontawesome-free/css/all.min.css');
 
+require('bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css');
+
 // Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
 //const $ = require('jquery');
 
