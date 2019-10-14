@@ -42,7 +42,7 @@ abstract class AbstractAdminController extends BaseController
 
     protected function getLimit(): int
     {
-        return 20;
+        return 2;
     }
 
     protected function addEvent($event, \Closure $callback)

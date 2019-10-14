@@ -34,7 +34,7 @@ class SidebarService
                 $arrayKey = str_replace('admin_', '', $key);
                 $arrayKey = str_replace('_create', '', $arrayKey);
                 $arrayKey = str_replace('_index', '', $arrayKey);
-                
+
                 if (!isset($sidebar[$arrayKey])) {
                     $sidebar[$arrayKey][] = [
                         'name' => sprintf('%s %s',
