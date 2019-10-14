@@ -14,7 +14,7 @@
 
             <div class="row">
                 <div class="col-sm-12">
-                    {# old filter #}
+                    {# filter #}
                     {% block crud_filter %}
                         <div class="ibox">
                             <div class="ibox-content p-xs">
@@ -33,7 +33,7 @@
                                             <div class="col-md-3 col-sd-2">
                                                 <div class="form-group">
                                                     <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> {{ 'search'|trans({}, 'easy_cms') }}</button>
-                                                    <a href="{{ path('admin_category_create') }}" class="btn btn-info"><i class="fa fa-plus"></i> {{ 'new'|trans({}, 'easy_cms') }}</a>
+                                                    <a href="{{ path('%s_create'|format(route_prefix)) }}" class="btn btn-info"><i class="fa fa-plus"></i> {{ 'new'|trans({}, 'easy_cms') }}</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -42,7 +42,7 @@
                             </div>
                         </div>
                     {% endblock %}
-                    {# end old filter #}
+                    {# end filter #}
                 </div>
             </div>
 
@@ -66,14 +66,14 @@
                                                     <th {% if field.width is defined %}width="{{ field.width }}"{% endif %}>
                                                         {% if field.sortable %}
                                                             <a href="?sort={{ field.name }}&dir={{ dir == 'asc' ? 'desc' : 'asc' }}{{ filter ? "&f=#{filter}" : '' }}">
-                                                                {{ "fields.#{field.name}.label"|trans([]) }} <i class="fas fa-sort{{ sort == field.name ? (dir == 'asc' ? '-up' : '-down') : '' }}"></i>
+                                                                {{ "crud.list_fields.#{field.name}.label"|trans({}, 'easy_cms') }} <i class="fas fa-sort{{ sort == field.name ? (dir == 'asc' ? '-up' : '-down') : '' }}"></i>
                                                             </a>
                                                         {% else %}
-                                                            {{ "fields.#{field.name}.label"|trans([]) }}
+                                                            {{ "crud.list_fields.#{field.name}.label"|trans({}, 'easy_cms') }}
                                                         {% endif %}
                                                     </th>
                                                 {% endfor %}
-                                                <th width="125">{{ 'actions'|trans({}, 'easy_cms') }}</th>
+                                                <th width="125">{{ 'crud.list.actions'|trans({}, 'easy_cms') }}</th>
                                             </tr>
                                             </thead>
 
@@ -88,7 +88,7 @@
                                                                         {% if attribute(entity, field.name) is null %}
                                                                             -
                                                                         {% else %}
-                                                                            {{ attribute(entity, field.name)|date('date_hour_format'|trans({}, 'easy_cms')) }}
+                                                                            {{ attribute(entity, field.name)|date('crud.date_hour_format'|trans({}, 'easy_cms')) }}
                                                                         {% endif %}
                                                                     {% else %}
                                                                         {{ attribute(entity, field.name) }}
@@ -100,9 +100,9 @@
                                                             <button class="btn btn-xs btn-danger js-genericDelete"
                                                                     data-id="{{ entity.id }}"
                                                                     data-url="{{ path("#{route_prefix}_delete", { 'id': entity.id }) }}"
-                                                                    data-title="{{ 'title'|trans([]) }}"
-                                                                    data-message="{{ 'delete_warning'|trans([]) }}">
-                                                                <i class="fas fa-trash-alt"></i> {{ 'delete'|trans({}, 'easy_cms') }}
+                                                                    data-title="{{ 'crud.list.delete_title'|trans({},  'easy_cms') }}"
+                                                                    data-message="{{ 'crud.list.delete_warning'|trans({}, 'easy_cms') }}">
+                                                                <i class="fas fa-trash-alt"></i> {{ 'crud.list.delete'|trans({}, 'easy_cms') }}
                                                             </button>
                                                         </td>
                                                     </tr>

@@ -3,15 +3,15 @@
 
 namespace App\EasyBundle\Form\Admin;
 
-use App\EasyBundle\Entity\Category;
+use App\EasyBundle\Entity\Post;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CategoryForm extends BaseForm
+class PostForm extends BaseForm
 {
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Category::class,
+            'data_class' => Post::class,
             'attr' => [
                 'novalidate' => 'novalidate',
                 'autocomplete' => 'off',

@@ -3,7 +3,6 @@
 
 namespace App\EasyBundle\Repository;
 
-
 use App\EasyBundle\Entity\Contact;
 use App\EasyBundle\Library\AbstractRepository;
 

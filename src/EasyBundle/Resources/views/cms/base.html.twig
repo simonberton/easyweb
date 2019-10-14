@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>Easy Web</title>
 
     <!-- Custom fonts for this template-->
     {% block stylesheets %}
@@ -176,21 +176,35 @@
 </a>
 
 <!-- Bootstrap core JavaScript-->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+{#<script src="vendor/jquery/jquery.min.js"></script>#}
+{#<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>#}
 
-<!-- Core plugin JavaScript-->
-<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+{#<!-- Core plugin JavaScript-->#}
+{#<script src="vendor/jquery-easing/jquery.easing.min.js"></script>#}
+<script type="text/javascript">
+  window.cmsTranslations = {
+    cancel: '{{ 'crud.list.delete_title'|trans({}, 'easy_cms') }}',
+    delete: {
+      confirm: '{{ 'crud.alert.cancel.confirm'|trans({}, 'easy_cms') }}',
+    }
+  };
+</script>
+{#<!-- Custom scripts for all pages-->#}
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+    {{ encore_entry_script_tags('admin') }}
 
-<!-- Custom scripts for all pages-->
-<script src="js/sb-admin-2.min.js"></script>
+    <!-- Renders app.js & a webpack runtime.js file
+        <script src="/build/runtime.js"></script>
+        <script src="/build/app.js"></script> -->
+{% endblock %}
 
-<!-- Page level plugins -->
-<script src="vendor/chart.js/Chart.min.js"></script>
+{#<!-- Page level plugins -->#}
+{#<script src="vendor/chart.js/Chart.min.js"></script>#}
 
-<!-- Page level custom scripts -->
-<script src="js/demo/chart-area-demo.js"></script>
-<script src="js/demo/chart-pie-demo.js"></script>
+{#<!-- Page level custom scripts -->#}
+{#<script src="js/demo/chart-area-demo.js"></script>#}
+{#<script src="js/demo/chart-pie-demo.js"></script>#}
 
 </body>
 

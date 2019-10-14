@@ -3,25 +3,24 @@
 
 namespace App\EasyBundle\Controller\Admin;
 
-
 use App\EasyBundle\Library\AbstractAdminController;
 use App\EasyBundle\Library\AbstractService;
-use App\EasyBundle\Service\CategoryService;
+use App\EasyBundle\Service\PostService;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * @Route("/category", name="admin_category_")
+ * @Route("/post", name="admin_post_")
  */
-class CategoryController extends AbstractAdminController
+class PostController extends AbstractAdminController
 {
     protected $service;
 
-    public function __construct(CategoryService $categoryService, TranslatorInterface $translator)
+    public function __construct(PostService $categoryService, TranslatorInterface $translator)
     {
         $this->service = $categoryService;
 
-       parent::__construct($translator);
+        parent::__construct($translator);
     }
 
     protected function getService(): AbstractService
@@ -36,6 +35,6 @@ class CategoryController extends AbstractAdminController
 
     protected function getRoutePrefix(): string
     {
-        return 'admin_category';
+        return 'admin_post';
     }
 }

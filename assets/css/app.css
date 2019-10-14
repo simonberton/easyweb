@@ -3,3 +3,8 @@
 body {
     background-color: lightgray;
 }
+
+.pagination .active a {
+    color: #fff;
+    background: #1ab394;
+}

@@ -6,9 +6,9 @@ namespace App\EasyBundle\Form\Admin;
 use App\EasyBundle\Entity\BaseEntity;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BaseForm extends AbstractType
@@ -17,18 +17,32 @@ class BaseForm extends AbstractType
     {
         $builder
             ->add('title', TextType::class, [
-                'label' => 'form.title.label',
+                'label' => 'crud.form.title.label',
                 'required' => true,
                 'attr' => [
-                    'placeholder' => 'form.title.placeholder'
+                    'placeholder' => 'crud.form.title.placeholder'
+                ]
+            ])
+            ->add('description', TextType::class, [
+                'label' => 'crud.form.description.label',
+                'required' => true,
+                'attr' => [
+                    'placeholder' => 'crud.form.description.placeholder'
+                ]
+            ])
+            ->add('content', TextareaType::class, [
+                'label' => 'crud.form.content.label',
+                'required' => true,
+                'attr' => [
+                    'placeholder' => 'crud.form.content.placeholder'
                 ]
             ])
             ->add('slug', TextType::class, [
-                'label' => 'form.slug.label',
-                'help' => 'form.slug.help',
+                'label' => 'crud.form.slug.label',
+                'help' => 'crud.form.slug.help',
                 'required' => false,
                 'attr' => [
-                    'placeholder' => 'form.slug.placeholder',
+                    'placeholder' => 'crud.form.slug.placeholder',
                 ],
             ])
         ;
@@ -47,18 +61,23 @@ class BaseForm extends AbstractType
 
         $builder
             ->add('publishStatus', ChoiceType::class, [
-                'translation_domain' => 'ws_cms_editorial',
                 'label' => 'publishing.publishStatus.label',
                 'choices' => $publishingOptions,
                 'attr' => [
-                    'data-component' => 'ws_select'
+                    'data-component' => 'easy_select'
                 ],
             ])
-            ->add('publishSince', DateTimeType::class, [
-                'label' => 'publishing.publishSince.label'
+            ->add('publishSince', TextType::class, [
+                'label' => 'publishing.publishSince.label',
+                'attr' => [
+                    'class' => 'js-datePicker'
+                ]
             ])
-            ->add('publishUntil', DateTimeType::class, [
-                'label' => 'publishing.publishUntil.label'
+            ->add('publishUntil', TextType::class, [
+                'label' => 'publishing.publishUntil.label',
+                'attr' => [
+                    'class' => 'js-datePicker'
+                ]
             ]);
     }
 

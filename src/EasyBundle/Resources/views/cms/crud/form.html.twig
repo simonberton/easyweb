@@ -1,0 +1,9 @@
+{{ form_start(form) }}
+{{ form_widget(form) }}
+
+<hr>
+<a href="{{ path("#{route_prefix}_index") }}" class="btn btn-danger">{{ 'cancel'|trans({}, 'easy_cms') }}</a>
+
+<button type="submit" class="btn btn-success">{{ 'save'|trans({}, 'easy_cms') }}</button>
+
+{{ form_end(form, {'render_rest': false}) }}

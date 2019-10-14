@@ -3,15 +3,15 @@
 
 namespace App\EasyBundle\Repository;
 
-use App\EasyBundle\Entity\Category;
+use App\EasyBundle\Entity\Post;
 use App\EasyBundle\Library\AbstractRepository;
 
-class CategoryRepository extends AbstractRepository
+class PostRepository extends AbstractRepository
 {
 
     public function getEntityClass()
     {
-        return Category::class;
+        return Post::class;
     }
 
     public function getFilterFields()

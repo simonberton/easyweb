@@ -3,7 +3,9 @@
         "@fortawesome/fontawesome-free": "^5.10.2",
         "@symfony/webpack-encore": "^0.28.0",
         "core-js": "^3.0.0",
+        "node-sass": "^4.12.0",
         "regenerator-runtime": "^0.13.2",
+        "sass-loader": "^7.0.1",
         "webpack-notifier": "^1.6.0"
     },
     "license": "UNLICENSED",
@@ -13,5 +15,13 @@
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "build": "encore production --progress"
+    },
+    "dependencies": {
+        "bootstrap": "^4.3.1",
+        "bootstrap-datepicker": "^1.9.0",
+        "datepicker": "^0.0.0",
+        "jquery": "^3.4.1",
+        "popper.js": "^1.15.0",
+        "sweetalert2": "^8.17.6"
     }
 }

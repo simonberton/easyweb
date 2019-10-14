@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 use App\EasyBundle\Entity\AssetImage;
-use App\EasyBundle\Entity\Category;
 
 /**
  * @ORM\MappedSuperclass
@@ -36,7 +35,7 @@ abstract class BaseEntity
      * @Assert\Length(max=128)
      *
      * @ORM\Column(name="slug", type="string", length=128, nullable=false)
-     * @Gedmo\Slug(updatable=false, unique=true, unique_base="domain", fields={"title"})
+     * @Gedmo\Slug(updatable=false, unique=true, fields={"title"})
      */
     private $slug;
 
@@ -58,25 +57,14 @@ abstract class BaseEntity
     private $mainImage;
 
     /**
-     * @Assert\Type(type="Easy\Core\Entity\Category")
-     * @Assert\NotNull()
      *
-     * @ORM\ManyToOne(targetEntity="App\EasyBundle\Entity\Category")
-     * @ORM\JoinColumn(name="category", referencedColumnName="category_id", nullable=false)
-     */
-    private $category;
-
-    /**
-     * @Assert\DateTime()
-     *
-     * @ORM\Column(name="publish_since", type="datetime", nullable=true)
+     * @ORM\Column(name="publish_since", type="text", nullable=true)
      */
     private $publishSince;
 
     /**
-     * @Assert\DateTime()
      *
-     * @ORM\Column(name="publish_until", type="datetime", nullable=true)
+     * @ORM\Column(name="publish_until", type="text", nullable=true)
      */
     private $publishUntil;
 
@@ -88,17 +76,40 @@ abstract class BaseEntity
      */
     private $publishStatus;
 
+    /**
+     * @Assert\DateTime()
+     * @Gedmo\Timestampable(on="create")
+     *
+     * @ORM\Column(name="created_at", type="datetime", nullable=false)
+     */
+    private $createdAt;
+
+    /**
+     * @Assert\DateTime()
+     * @Gedmo\Timestampable(on="update")
+     *
+     * @ORM\Column(name="modified_at", type="datetime", nullable=true)
+     */
+    private $modifiedAt;
+
     public function getId(): int
     {
         return $this->id;
     }
 
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    public function getSlug(): string
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
     {
         return $this->slug;
     }
@@ -146,18 +157,6 @@ abstract class BaseEntity
         return $this;
     }
 
-    public function getCategory(?Category $category): ?Category
-    {
-        return $this->category;
-    }
-
-    public function setCategory(Category $category): self
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
     public function getPublishStatus(): ?string
     {
         return $this->publishStatus;
@@ -170,26 +169,50 @@ abstract class BaseEntity
         return $this;
     }
 
-    public function getPublishSince(): ?\DateTimeInterface
+    public function getPublishSince(): ?string
     {
         return $this->publishSince;
     }
 
-    public function setPublishSince(?\DateTimeInterface $publishSince): self
+    public function setPublishSince(?string $publishSince): self
     {
         $this->publishSince = $publishSince;
 
         return $this;
     }
 
-    public function getPublishUntil(): ?\DateTimeInterface
+    public function getPublishUntil(): ?string
     {
         return $this->publishUntil;
     }
 
-    public function setPublishUntil(?\DateTimeInterface $publishUntil): self
+    public function setPublishUntil(?string $publishUntil): self
     {
         $this->publishUntil = $publishUntil;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): \DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getModifiedAt(): \DateTimeInterface
+    {
+        return $this->modifiedAt;
+    }
+
+    public function setModifiedAt(\DateTimeInterface $modifiedAt): self
+    {
+        $this->modifiedAt = $modifiedAt;
 
         return $this;
     }
