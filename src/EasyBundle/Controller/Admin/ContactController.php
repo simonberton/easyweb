@@ -114,12 +114,13 @@ class ContactController extends AbstractController
      */
     public function edit(Request $request, int $id): Response
     {
-        //$this->denyAccessUnlessAllowed('edit');
-
         $entity = $this->service->get($id);
         if ($entity === null || get_class($entity) !== $this->service->getEntityClass()) {
             throw new NotFoundHttpException(sprintf($this->translator->trans('not_found', [], $this->getTranslatorPrefix()), $id));
         }
+
+        $entity->setIsRead(true);
+        $this->service->edit($entity);
 
         $form = $this->createForm(
             $this->service->getFormClass(),

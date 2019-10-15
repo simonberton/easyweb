@@ -56,7 +56,7 @@ class Contact
     private $extraData;
 
     /**
-     * @ORM\Column(name="contact_extra_data", type="boolean", nullable=true)
+     * @ORM\Column(name="contact_is_read", type="boolean", nullable=true)
      */
     private $isRead = false;
 
@@ -161,7 +161,7 @@ class Contact
 
     public function setIsRead($isRead): self
     {
-        $this->read = $isRead;
+        $this->isRead = $isRead;
 
         return $this;
     }

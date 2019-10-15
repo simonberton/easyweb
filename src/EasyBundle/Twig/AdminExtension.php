@@ -34,8 +34,6 @@ class AdminExtension extends AbstractExtension
 
     public function getContactCount()
     {
-        $f = '';
-
-        return $this->contactService->getAllCount($f);
+        return $this->contactService->getNotReadCount();
     }
 }
