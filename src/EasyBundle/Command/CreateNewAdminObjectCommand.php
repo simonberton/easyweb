@@ -53,8 +53,7 @@ class CreateNewAdminObjectCommand extends Command
             'command' => 'd:s:u',
             '--force'  => true,
         ]);
-        $returnCode = $command->run($updateInput, $output);
-        $output->writeln($returnCode);
+        $command->run($updateInput, $output);
 
         $output->writeln('This is the end...');
     }
