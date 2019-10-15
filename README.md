@@ -13,14 +13,17 @@ By Running this command:
     bin/console easy:create-admin-object myNewEntity
 ```
 
-It will create the following so we can add, delete and modify in our cms:
+It will create:
 - Entity
 - Form
 - Service
 - Repository
 - Controller
 
+So we have all we need to create, edit and delete our newly created entity.
+By default it will create a route on our /admin/myNewEntity
 
+If we want to change it, just go to the controller: myNewEntityController.php and change the route.
 
 # Infrastructure
 
@@ -31,7 +34,22 @@ You'll need the following software installed on your machine:
 * [Docker](https://docs.docker.com/install/)
 * [Docker Compose](https://docs.docker.com/compose/install/)
 * [PHP-cs-fixer](http://cs.sensiolabs.org/)
+* Yarn
+```bash
+sudo apt-get install -y nodejs
 
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+
+sudo apt-get update && sudo apt-get install -y yarn
+
+export PATH="$PATH:`yarn global bin`"
+
+composer require encore
+
+yarn install 
+```
 ## Docker
 
 Create docker-compose environment file
@@ -74,17 +92,13 @@ Create DB schema
 ```bash
 docker exec -it easy-php bin/console doctrine:schema:create
 ```
-### Node dependencies
-```bash
-yarn install
-```
+
 ### Assets
 
 Build assets
 ```bash
 yarn encode dev
 ```
-
 
 ## Host and CMS
 
