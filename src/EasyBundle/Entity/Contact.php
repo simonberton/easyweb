@@ -56,6 +56,11 @@ class Contact
     private $extraData;
 
     /**
+     * @ORM\Column(name="contact_extra_data", type="boolean", nullable=true)
+     */
+    private $isRead = false;
+
+    /**
      * @Assert\DateTime()
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="contact_created_at", type="datetime", nullable=false)
@@ -145,6 +150,18 @@ class Contact
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function isRead(): bool
+    {
+        return $this->isRead;
+    }
+
+    public function setIsRead($isRead): self
+    {
+        $this->read = $isRead;
 
         return $this;
     }
