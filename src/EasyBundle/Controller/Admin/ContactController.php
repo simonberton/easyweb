@@ -86,7 +86,7 @@ class ContactController extends AbstractController
             }
         }
         return $this->render(
-            '@Easy/cms/crud/index.html.twig',
+            '@Easy/cms/contact/index.html.twig',
             array_merge(
                 $data,
                 [

@@ -33,7 +33,6 @@
                                             <div class="col-md-3 col-sd-2">
                                                 <div class="form-group">
                                                     <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> {{ 'search'|trans({}, 'easy_cms') }}</button>
-                                                        <a href="{{ path('%s_create'|format(route_prefix)) }}" class="btn btn-info"><i class="fa fa-plus"></i> {{ 'new'|trans({}, 'easy_cms') }}</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -80,7 +79,8 @@
                                             {% block crud_table_body %}
                                                 <tbody>
                                                 {% for entity in data %}
-                                                        <tr class="js-genericDelete_wrapper" data-id="{{ entity.id }}">
+
+                                                        <tr class="js-genericDelete_wrapper {{ entity.isRead == false? 'table-info' }}" data-id="{{ entity.id }}">
                                                             {% for field in list_fields %}
                                                                 <td>
                                                                     <a href="{{ path("#{route_prefix}_edit", { 'id': entity.id }) }}">
