@@ -37,13 +37,6 @@ class BaseForm extends AbstractType
                     'placeholder' => 'crud.form.content.placeholder'
                 ]
             ])
-//            ->add('content', TextareaType::class, [
-//                'label' => 'crud.form.content.label',
-//                'required' => true,
-//                'attr' => [
-//                    'placeholder' => 'crud.form.content.placeholder'
-//                ]
-//            ])
             ->add('slug', TextType::class, [
                 'label' => 'crud.form.slug.label',
                 'help' => 'crud.form.slug.help',
