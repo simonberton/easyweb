@@ -17,19 +17,19 @@ class ContactForm extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'contact.form.email.label',
+                'label' => 'crud.form.name.label',
                 'required' => false,
             ])
             ->add('email', TextType::class, [
-                'label' => 'contact.form.description.label',
+                'label' => 'crud.form.email.label',
                 'required' => false,
             ])
             ->add('message', TextareaType::class, [
-                'label' => 'contact.form.message.label',
+                'label' => 'crud.form.message.label',
                 'required' => false,
             ])
             ->add('createdAt', TextType::class, [
-                'label' => 'contact.form.createdAt.label',
+                'label' => 'crud.form.createdAt.label',
                 'required' => false,
             ]);
     }
