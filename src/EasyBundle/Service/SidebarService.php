@@ -35,7 +35,7 @@ class SidebarService
                     $arrayKey = str_replace('_create', '', $arrayKey);
                     $arrayKey = str_replace('_index', '', $arrayKey);
 
-                    if (!isset($sidebar[$arrayKey])) {
+                    if (!isset($sidebar[$arrayKey]) && $arrayKey !== 'contact') {
                         $sidebar[$arrayKey][] = [
                             'name' => sprintf('%s',
                                 $this->translator->trans('crud.create', [], 'easy_cms')
