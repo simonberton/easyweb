@@ -5,3 +5,4 @@ twig:
 
     form_themes:
         - '@Easy/form/fields.html.twig'
+        - '@FOSCKEditor/Form/ckeditor_widget.html.twig'

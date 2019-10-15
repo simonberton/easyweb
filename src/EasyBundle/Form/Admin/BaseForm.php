@@ -5,11 +5,11 @@ namespace App\EasyBundle\Form\Admin;
 
 use App\EasyBundle\Entity\BaseEntity;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class BaseForm extends AbstractType
 {
@@ -30,7 +30,7 @@ class BaseForm extends AbstractType
                     'placeholder' => 'crud.form.description.placeholder'
                 ]
             ])
-            ->add('content', TextareaType::class, [
+            ->add('content', CKEditorType::class, [
                 'label' => 'crud.form.content.label',
                 'required' => true,
                 'attr' => [
