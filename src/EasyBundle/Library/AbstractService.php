@@ -65,6 +65,19 @@ abstract class AbstractService
     }
 
     /**
+     *
+     * @return int
+     * @throws \Exception
+     */
+    public function getAllCount()
+    {
+        $f = "";
+        $total = $this->repository->getAllCount($f);
+
+        return $total;
+    }
+
+    /**
      * @param string $slug
      * @return mixed
      */

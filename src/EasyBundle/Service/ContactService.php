@@ -30,7 +30,7 @@ class ContactService extends AbstractService
         return [
             ['name' => 'name'],
             ['name' => 'email'],
-            ['name' => 'publishStatus'],
+            ['name' => 'createdAt'],
         ];
     }
 }

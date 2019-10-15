@@ -6,6 +6,7 @@ namespace App\EasyBundle\Controller\Admin;
 use App\EasyBundle\Service\ContactService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -103,15 +104,95 @@ class ContactController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="show")
+     * @Route ("/edit/{id}", name="edit")
      *
      * @param Request $request
+     * @param int $id
      *
      * @return Response
      * @throws \Exception
      */
-    public function show(Request $request, int $id)
+    public function edit(Request $request, int $id): Response
     {
-        return $this->render('@Easy/cms/home.html.twig');
+        //$this->denyAccessUnlessAllowed('edit');
+
+        $entity = $this->service->get($id);
+        if ($entity === null || get_class($entity) !== $this->service->getEntityClass()) {
+            throw new NotFoundHttpException(sprintf($this->translator->trans('not_found', [], $this->getTranslatorPrefix()), $id));
+        }
+
+        $form = $this->createForm(
+            $this->service->getFormClass(),
+            $entity,
+            [
+                'translation_domain' => $this->getTranslatorPrefix()
+            ]
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                try {
+                    $this->service->edit($entity);
+
+                    $this->addFlash('cms_success', $this->translator->trans('edit_success', [], $this->getTranslatorPrefix()));
+
+                    return $this->redirect($this->generateUrl($this->getRoutePrefix() . '_index'));
+                } catch (\Exception $e) {
+                    $this->addFlash('cms_error', $this->translator->trans('edit_error', [], $this->getTranslatorPrefix()));
+                }
+            } else {
+                $this->addFlash('cms_error', $this->getFormErrorMessagesList($form));
+            }
+        }
+
+        return $this->render('@Easy/cms/crud/show.html.twig',
+            [
+                'form' => $form->createView(),
+                'isCreate' => false,
+                'trans_prefix' => $this->getTranslatorPrefix(),
+                'route_prefix' => $this->getRoutePrefix(),
+            ]
+        );
+    }
+
+    /**
+     * @Route ("/delete/{id}", name="delete", methods="POST"))
+     *
+     * @param Request $request
+     * @param int $id
+     *
+     * @return Response
+     */
+    public function delete(Request $request, int $id): Response
+    {
+        if (!$request->isXmlHttpRequest()) {
+            return $this->json(
+                ['msg' => $this->translator->trans('bad_request', [], 'easy_cms')],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+
+        try {
+            $entity = $this->service->get($id);
+            if ($entity === null || get_class($entity) !== $this->service->getEntityClass()) {
+                return $this->json([
+                    'msg' => sprintf($this->translator->trans('not_found', [], $this->getTranslatorPrefix()), $id)
+                ], Response::HTTP_NOT_FOUND);
+            }
+
+            $this->service->delete($entity);
+
+            return $this->json([
+                'id' => $id,
+                'title' => $this->translator->trans('delete_success_title', [], 'easy_cms'),
+                'msg' => $this->translator->trans('delete_success_message', [], $this->getTranslatorPrefix()),
+            ], Response::HTTP_OK);
+        } catch (\Exception $e) {
+            return $this->json([
+                'msg' => $this->translator->trans('delete_failed', [], 'easy_cms')
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }

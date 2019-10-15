@@ -62,13 +62,6 @@ class Contact
      */
     private $createdAt;
 
-    /**
-     * @Assert\DateTime()
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(name="contact_modified_at", type="datetime", nullable=true)
-     */
-    private $modifiedAt;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -142,6 +135,18 @@ class Contact
     public function setAcceptsNotifications(bool $acceptsNotifications)
     {
         $this->acceptsNotifications = $acceptsNotifications;
+    }
+
+    public function getCreatedAt(): string
+    {
+        return $this->createdAt->format('m/d/Y');
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
     }
 
 }
