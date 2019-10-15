@@ -37,15 +37,17 @@ class SidebarService
 
                 if (!isset($sidebar[$arrayKey])) {
                     $sidebar[$arrayKey][] = [
-                        'name' => sprintf('%s %s',
-                            $this->translator->trans('crud.create', [], 'easy_cms'), ucfirst($arrayKey)
+                        'name' => sprintf('%s',
+                            $this->translator->trans('crud.create', [], 'easy_cms')
                         ),
+                        'icon' => $this->getIcon(),
                         'route' => $this->router->generate(sprintf('admin_%s_create', $arrayKey))
                     ];
                     $sidebar[$arrayKey][] = [
-                        'name' => sprintf('%s %s',
-                            $this->translator->trans('crud.list', [], 'easy_cms'), ucfirst($arrayKey)
+                        'name' => sprintf('%s',
+                            $this->translator->trans('crud.list', [], 'easy_cms')
                         ),
+                        'icon' => $this->getIcon(false),
                         'route' => $this->router->generate(sprintf('admin_%s_index', $arrayKey)),
                     ];
                 }
@@ -57,5 +59,13 @@ class SidebarService
         ]);
 
         return $sidebar;
+    }
+
+    private function getIcon($create = true)
+    {
+        if ($create) {
+            return 'fa-plus-square';
+        }
+        return 'fa-list-alt';
     }
 }
