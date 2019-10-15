@@ -3,7 +3,6 @@
 
 namespace App\EasyBundle\Service;
 
-
 use App\EasyBundle\Entity\Category;
 use App\EasyBundle\Form\Admin\CategoryForm;
 use App\EasyBundle\Library\AbstractService;

@@ -3,7 +3,6 @@
 
 namespace App\EasyBundle\Controller\Admin;
 
-
 use App\EasyBundle\Library\AbstractAdminController;
 use App\EasyBundle\Library\AbstractService;
 use App\EasyBundle\Service\CategoryService;
