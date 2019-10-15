@@ -283,6 +283,8 @@ abstract class AbstractAdminController extends BaseController
             $controllerName = strtolower(str_replace('Controller', '', $classPath[4]));
             $routePrefix = sprintf('@%s%s/%s/%s', $classPath[0], $classPath[1], strtolower($classPath[3]), $controllerName);
         }
+
+        return $routePrefix;
     }
 
     protected function useCRUDTemplate($template) : bool
