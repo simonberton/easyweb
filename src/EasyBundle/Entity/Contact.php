@@ -56,18 +56,16 @@ class Contact
     private $extraData;
 
     /**
+     * @ORM\Column(name="contact_is_read", type="boolean", nullable=true)
+     */
+    private $isRead = false;
+
+    /**
      * @Assert\DateTime()
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="contact_created_at", type="datetime", nullable=false)
      */
     private $createdAt;
-
-    /**
-     * @Assert\DateTime()
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(name="contact_modified_at", type="datetime", nullable=true)
-     */
-    private $modifiedAt;
 
     public function getId(): ?int
     {
@@ -142,6 +140,30 @@ class Contact
     public function setAcceptsNotifications(bool $acceptsNotifications)
     {
         $this->acceptsNotifications = $acceptsNotifications;
+    }
+
+    public function getCreatedAt(): string
+    {
+        return $this->createdAt->format('m/d/Y');
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function isRead(): bool
+    {
+        return $this->isRead;
+    }
+
+    public function setIsRead($isRead): self
+    {
+        $this->isRead = $isRead;
+
+        return $this;
     }
 
 }

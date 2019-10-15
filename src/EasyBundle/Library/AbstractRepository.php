@@ -50,11 +50,6 @@ abstract class AbstractRepository extends ServiceEntityRepository
         return $qb->getQuery()->execute();
     }
 
-    /**
-     * @param string $filter
-     *
-     * @return int
-     */
     public function getAllCount(?string $filter)
     {
         $alias = 't';

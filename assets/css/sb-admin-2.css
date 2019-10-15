@@ -11120,6 +11120,7 @@ a:focus {
 
 .sidebar .nav-item {
   position: relative;
+  height: 42px;
 }
 
 .sidebar .nav-item:last-child {

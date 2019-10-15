@@ -100,6 +100,11 @@ Build assets
 yarn encode dev
 ```
 
+Load Fixtures
+```bash
+php bin/console doctrine:fixtures:load
+```
+
 ## Host and CMS
 
 Update your /etc/host file:
@@ -111,7 +116,8 @@ echo "127.0.0.1 easy.loc" >> /etc/hosts
 Open a browser and go to:
 
 * http://easy.loc/admin
-
+User: admin@test.com
+Password: admin
 
 ## Git Hooks
 

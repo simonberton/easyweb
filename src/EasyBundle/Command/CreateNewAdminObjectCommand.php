@@ -199,7 +199,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * @Route("/%s", name="admin_%s_")
+ * @Route("/admin/%s", name="admin_%s_")
  */
 class %sController extends AbstractAdminController
 {
