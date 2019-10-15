@@ -5,7 +5,7 @@
     {% for menuElm in items%}
         <li class="nav-item">
             <a class="nav-link" href="{{ menuElm.route }}" aria-expanded="true">
-                <i class="fas fa-fw fa-cog"></i>
+                <i class="fas {{ menuElm.icon }}"></i>
                 <span>{{ menuElm.name }}</span>
             </a>
         </li>
