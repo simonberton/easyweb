@@ -16,31 +16,12 @@ class Post extends BaseEntity
      */
     private $mainImageFilename;
 
-    /**
-     * @ORM\Column(name="image_filename_2", type="string", nullable=true)
-     */
-    private $mainImageFilename2;
-
     public function getMainImageFilename(): ?string
     {
         return $this->mainImageFilename;
     }
 
     public function setMainImageFilename(string $mainImageFilename): self
-    {
-        $this->mainImageFilename = $mainImageFilename;
-
-        return $this;
-    }
-
-
-
-    public function getMainImageFilename2(): ?string
-    {
-        return $this->mainImageFilename;
-    }
-
-    public function setMainImageFilename2(string $mainImageFilename): self
     {
         $this->mainImageFilename = $mainImageFilename;
 
