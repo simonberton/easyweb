@@ -51,12 +51,6 @@ abstract class BaseEntity
     private $content;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\EasyBundle\Entity\AssetImage")
-     * @ORM\JoinColumn(name="main_image", referencedColumnName="image_id", nullable=true)
-     */
-    private $mainImage;
-
-    /**
      *
      * @ORM\Column(name="publish_since", type="text", nullable=true)
      */
@@ -141,18 +135,6 @@ abstract class BaseEntity
     public function setContent(?string $content): self
     {
         $this->content = $content;
-
-        return $this;
-    }
-
-    public function getMainImage(): ?AssetImage
-    {
-        return $this->mainImage;
-    }
-
-    public function setMainImage(?AssetImage $mainImage): self
-    {
-        $this->mainImage = $mainImage;
 
         return $this;
     }

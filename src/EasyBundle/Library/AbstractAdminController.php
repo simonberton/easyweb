@@ -3,7 +3,10 @@
 
 namespace App\EasyBundle\Library;
 
+use App\EasyBundle\Service\UploaderHelper;
+use Gedmo\Sluggable\Util\Urlizer;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -181,10 +184,8 @@ abstract class AbstractAdminController extends BaseController
      * @return Response
      * @throws \Exception
      */
-    public function edit(Request $request, int $id): Response
+    public function edit(Request $request, int $id, UploaderHelper $uploaderHelper): Response
     {
-        //$this->denyAccessUnlessAllowed('edit');
-
         $entity = $this->getService()->get($id);
         if ($entity === null || get_class($entity) !== $this->getService()->getEntityClass()) {
             throw new NotFoundHttpException(sprintf($this->trans('not_found', [], $this->getTranslatorPrefix()), $id));
@@ -204,23 +205,23 @@ abstract class AbstractAdminController extends BaseController
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                try {
-                    $this->getService()->edit($entity);
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $uploaderHelper->uploadAndSetImages($request, $entity);
+                $this->getService()->edit($entity);
 
-                    $this->addFlash('cms_success', $this->trans('edit_success', [], $this->getTranslatorPrefix()));
+                $this->addFlash('cms_success', $this->trans('edit_success', [], $this->getTranslatorPrefix()));
 
-                    return $this->redirect($this->generateUrl($this->getRoutePrefix() . '_index'));
-                } catch (\Exception $e) {
-                    $this->addFlash('cms_error', $this->trans('edit_error', [], $this->getTranslatorPrefix()));
-                }
-            } else {
-                $this->addFlash('cms_error', $this->getFormErrorMessagesList($form));
+                return $this->redirect($this->generateUrl($this->getRoutePrefix() . '_index'));
+            } catch (\Exception $e) {
+                $this->addFlash('cms_error', $this->trans('edit_error', [], $this->getTranslatorPrefix()));
             }
+        } else {
+            $this->addFlash('cms_error', $this->getFormErrorMessagesList($form));
         }
 
-        return $this->render($this->getTemplate('show.html.twig'),
+        return $this->render(
+            $this->getTemplate('show.html.twig'),
             [
                 'form' => $form->createView(),
                 'isCreate' => false,
