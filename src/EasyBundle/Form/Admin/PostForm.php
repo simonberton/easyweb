@@ -7,6 +7,7 @@ use App\EasyBundle\Entity\Post;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Image;
 
 class PostForm extends BaseForm
 {
@@ -16,8 +17,12 @@ class PostForm extends BaseForm
 
         $builder->add('mainImageFilename', FileType::class, [
             'mapped' => false,
+            'attr' => ['type' => 'image'],
             'label' => 'crud.form.imageFilename.label',
             'required' => false,
+            'constraints' => [
+                new Image()
+            ]
         ]);
     }
     public function configureOptions(OptionsResolver $resolver)
