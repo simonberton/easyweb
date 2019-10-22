@@ -1,9 +1,30 @@
 {{ form_start(form) }}
-{{ form_widget(form) }}
 
-<hr>
-<a href="{{ path("#{route_prefix}_index") }}" class="btn btn-danger">{{ 'cancel'|trans({}, 'easy_cms') }}</a>
+    <div class="my-custom-class-for-errors">
+        {{ form_errors(form) }}
+    </div>
 
-<button type="submit" class="btn btn-success">{{ 'save'|trans({}, 'easy_cms') }}</button>
+    {% for widget in form.children %}
+
+        <div class="form-row">
+            <div class="col-md-12">
+                {% if widget.vars.name != "_token" %}
+                    {{ form_label(widget) }}
+                {% endif %}
+                {{ form_widget(widget) }}
+            </div>
+            {% if widget.vars.attr is defined and widget.vars.attr.type is defined and widget.vars.attr.type == 'image' %}
+                <div class="col-md-12">
+                    <img src="{{ '/uploads/'~attribute(form.vars.data, widget.vars.name) }}" height="200">
+                </div>
+            {% endif %}
+        </div>
+
+    {% endfor %}
+
+    <hr>
+    <a href="{{ path("#{route_prefix}_index") }}" class="btn btn-danger">{{ 'cancel'|trans({}, 'easy_cms') }}</a>
+
+    <button type="submit" class="btn btn-success">{{ 'save'|trans({}, 'easy_cms') }}</button>
 
 {{ form_end(form, {'render_rest': false}) }}
