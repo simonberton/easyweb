@@ -121,11 +121,12 @@ abstract class AbstractAdminController extends BaseController
      * @Route("/create", name="create")
      *
      * @param Request $request
+     * @param UploaderHelper $uploaderHelper
      *
      * @return Response
      * @throws \Exception
      */
-    public function create(Request $request): Response
+    public function create(Request $request, UploaderHelper $uploaderHelper): Response
     {
         $entity = $this->getService()->getEntity();
         if ($entity === null) {
@@ -154,6 +155,7 @@ abstract class AbstractAdminController extends BaseController
             if ($form->isValid()) {
                 try {
                     $this->getService()->create($entity);
+                    $uploaderHelper->uploadAndSetImages($request, $entity);
 
                     $this->addFlash('cms_success', $this->trans('create_success', [], $this->getTranslatorPrefix()));
 
@@ -180,6 +182,7 @@ abstract class AbstractAdminController extends BaseController
      *
      * @param Request $request
      * @param int $id
+     * @param UploaderHelper $uploaderHelper
      *
      * @return Response
      * @throws \Exception
