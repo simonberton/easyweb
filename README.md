@@ -97,12 +97,12 @@ docker exec -it easy-php bin/console doctrine:schema:create
 
 Build assets
 ```bash
-yarn encode dev
+yarn
 ```
 
 Load Fixtures
 ```bash
-php bin/console doctrine:fixtures:load
+docker exec -it easy-php bin/console doctrine:fixtures:load
 ```
 
 ## Host and CMS
@@ -110,7 +110,7 @@ php bin/console doctrine:fixtures:load
 Update your /etc/host file:
 
 ```bash
-echo "127.0.0.1 easy.loc" >> /etc/hosts
+echo "127.0.0.1 easyweb.loc" >> /etc/hosts
 ```
 
 Open a browser and go to:
