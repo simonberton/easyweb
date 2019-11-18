@@ -3,10 +3,14 @@
 
 namespace App\EasyBundle\Controller\Site;
 
+use App\EasyBundle\Entity\Contact;
 use App\EasyBundle\Entity\Post;
+use App\EasyBundle\Form\Site\ContactForm;
 use App\EasyBundle\Repository\PostRepository;
+use App\EasyBundle\Service\ContactService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as BaseController;
 use App\EasyBundle\Service\HomepageService;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -24,10 +28,17 @@ class SiteController extends BaseController
     /** @var TranslatorInterface */
     private $translator;
 
-    public function __construct(TranslatorInterface $translator, PostRepository $postRepository)
-    {
+    /** @var ContactService */
+    private $contactService;
+
+    public function __construct(
+        TranslatorInterface $translator,
+        PostRepository $postRepository,
+        ContactService $contactService
+    ) {
         $this->postRepository = $postRepository;
         $this->translator = $translator;
+        $this->contactService = $contactService;
     }
 
     /**
@@ -50,7 +61,7 @@ class SiteController extends BaseController
     }
 
     /**
-     * @Route("/{slug}", name="post_detail")
+     * @Route("/post/{slug}", name="post_detail", methods={"GET"})
      *
      * @param $slug
      *
@@ -68,6 +79,46 @@ class SiteController extends BaseController
         return $this->render('@Easy/site/detail.html.twig', [
             'post' => $post,
             'title' => $post->getTitle()
+        ]);
+    }
+
+    /**
+     * @Route("/contact-us", name="contact", methods={"POST", "GET"})
+     *
+     * @param Request $request
+     *
+     * @return Response|JsonResponse
+     * @throws \Exception
+     */
+    public function contact(Request $request)
+    {
+        $contactResult = null;
+
+        $contact = new Contact();
+        $form = $this->createForm(ContactForm::class, $contact);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                try {
+                    $this->contactService->create($contact);
+                    //$subject = $this->translator->trans('contact.mail.subject');
+                    //$this->contactService->sendContactNotification($contact, $subject);
+
+                    return new JsonResponse([
+                        'result' => 'success'
+                    ]);
+                } catch (\Exception $e) {
+                    $contactResult = 'error';
+                }
+            } else {
+                $contactResult = 'error';
+            }
+        }
+
+        return $this->render('@Easy/site/contact.html.twig', [
+            'form' => $form->createView(),
+            'error' => $contactResult
         ]);
     }
 }

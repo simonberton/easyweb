@@ -85,12 +85,12 @@
 {%- endblock choice_widget_options -%}
 
 {%- block checkbox_widget -%}
-    <div class="col-sm-10">
-        <label class="custom-checkbox job-form__check col-12">
+{#    <div class="col-sm-10">#}
+{#        <label class="custom-checkbox job-form__check col-12">#}
             <input type="checkbox" class="custom-checkbox__input" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
-            <span class="custom-checkbox__checkmark"></span>
-        </label>
-    </div>
+{#            <span class="custom-checkbox__checkmark"></span>#}
+{#        </label>#}
+{#    </div>#}
 {%- endblock checkbox_widget -%}
 
 {%- block radio_widget -%}

@@ -102,6 +102,19 @@
                     <a class="d-block" href="mailto:{{ 'site.contact_email'|trans({}, 'easy_cms') }}">{{ 'site.contact_email'|trans({}, 'easy_cms') }}</a>
                 </div>
             </div>
+            <hr class="divider my-4">
+
+            <div class="row alert alert-success js-formSubmitSuccess hidden" role="alert">
+                {{ 'site.form.success_message'|trans({}, 'easy_cms') }}
+            </div>
+            <div class="row alert alert-danger js-formSubmitError hidden" role="alert">
+                {{ 'site.form.error_message'|trans({}, 'easy_cms') }}
+            </div>
+
+            <div class="row justify-content-center">
+                {{ render(controller('App\\EasyBundle\\Controller\\Site\\SiteController::contact')) }}
+            </div>
+            <hr class="divider my-4">
         </div>
     </section>
 
@@ -112,3 +125,4 @@
         </div>
     </footer>
 {% endblock %}
+
