@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * @Route("/category", name="admin_category_")
+ * @Route("/admin/category", name="admin_category_")
  */
 class CategoryController extends AbstractAdminController
 {
@@ -20,7 +20,7 @@ class CategoryController extends AbstractAdminController
     {
         $this->service = $categoryService;
 
-       parent::__construct($translator);
+        parent::__construct($translator);
     }
 
     protected function getService(): AbstractService

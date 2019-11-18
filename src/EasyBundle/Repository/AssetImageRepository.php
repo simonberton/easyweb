@@ -8,7 +8,6 @@ use App\EasyBundle\Library\AbstractRepository;
 
 class AssetImageRepository extends AbstractRepository
 {
-
     public function getEntityClass()
     {
         return AssetImage::class;
@@ -16,6 +15,6 @@ class AssetImageRepository extends AbstractRepository
 
     public function getFilterFields()
     {
-       return ['id'];
+        return ['id'];
     }
 }

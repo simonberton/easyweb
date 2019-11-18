@@ -9,7 +9,6 @@ use Doctrine\ORM\NonUniqueResultException;
 
 class ContactRepository extends AbstractRepository
 {
-
     public function getEntityClass()
     {
         return Contact::class;

@@ -9,7 +9,6 @@ use App\EasyBundle\Library\AbstractService;
 
 class PostService extends AbstractService
 {
-
     public function getEntityClass(): string
     {
         return Post::class;

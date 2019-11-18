@@ -11,7 +11,6 @@ use Psr\Log\LoggerInterface;
 
 class ContactService extends AbstractService
 {
-
     protected $repository;
     protected $logger;
     protected $em;

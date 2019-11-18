@@ -37,14 +37,16 @@ class SidebarService
 
                     if (!isset($sidebar[$arrayKey]) && $arrayKey !== 'contact') {
                         $sidebar[$arrayKey][] = [
-                            'name' => sprintf('%s',
+                            'name' => sprintf(
+                                '%s',
                                 $this->translator->trans('crud.create', [], 'easy_cms')
                             ),
                             'icon' => $this->getIcon(),
                             'route' => $this->router->generate(sprintf('admin_%s_create', $arrayKey))
                         ];
                         $sidebar[$arrayKey][] = [
-                            'name' => sprintf('%s',
+                            'name' => sprintf(
+                                '%s',
                                 $this->translator->trans('crud.list', [], 'easy_cms')
                             ),
                             'icon' => $this->getIcon(false),

@@ -6,6 +6,8 @@
 
 parameters:
     locale: 'en'
+    site_show_posts: true
+    site_homepage_posts_limit: 5
 
 services:
     # default configuration for services in *this* file

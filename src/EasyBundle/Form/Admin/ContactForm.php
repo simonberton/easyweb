@@ -12,7 +12,6 @@ use Symfony\Component\Form\AbstractType;
 
 class ContactForm extends AbstractType
 {
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

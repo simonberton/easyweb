@@ -16,7 +16,6 @@ class AdminExtension extends AbstractExtension
     {
         $this->sidebarService = $sidebarService;
         $this->contactService = $contactService;
-
     }
 
     public function getFunctions()

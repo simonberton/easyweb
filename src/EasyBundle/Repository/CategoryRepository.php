@@ -8,7 +8,6 @@ use App\EasyBundle\Library\AbstractRepository;
 
 class CategoryRepository extends AbstractRepository
 {
-
     public function getEntityClass()
     {
         return Category::class;

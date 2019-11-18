@@ -46,3 +46,24 @@ new: New
 
 delete_success_title: Object deleted successfuly
 delete_success_message: Object and all relations deleted
+
+
+site.title: 'Hello World'
+site.about: 'About'
+site.posts: 'Posts'
+site.contact: 'Contact us'
+site.homepage_header: 'is this is a test?'
+site.homepage_header_text: 'This is an example of a long text that goes on the homepage header'
+site.homepage_header_link: 'internal_url'
+site.homepage_header_link_text: 'Go to'
+site.homepage_header_img: 'header-image.jpg'
+site.homepage_about_title: "We've got what you need!"
+site.homepage_about_description: 'Start Bootstrap has everything you need to get your new website up and running in no time! Choose one of our open source, free to download, and easy to use themes! No strings'
+site.homepage_about_link: 'homepage'
+site.homepage_about_link_text: 'Get started!'
+site.contact_title: 'Want to contact us?'
+site.contact_description: 'Ready to start your next project with us? Give us a call or send us an email and we will get back to you as soon as possible!'
+site.contact_phone: '(+598)99123456'
+site.contact_email: 'info@yoursite.com'
+site.footer_copyright: 'Copyright @ Easy CMS - Simon Berton'
+site.post_not_found: 'Post could not be found'

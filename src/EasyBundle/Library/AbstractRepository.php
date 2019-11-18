@@ -95,7 +95,6 @@ abstract class AbstractRepository extends ServiceEntityRepository
 
         try {
             return $qb->getQuery()->getOneOrNullResult();
-
         } catch (NonUniqueResultException $e) {
             return null;
         }
@@ -126,5 +125,4 @@ abstract class AbstractRepository extends ServiceEntityRepository
             $qb->setParameter(sprintf('%s_filter', $field), sprintf('%%%s%%', $filter));
         }
     }
-
 }
