@@ -1,0 +1,39 @@
+{{ form_start(form, { 'action': path('site_contact'), 'attr': { 'id': 'js-contact-form' }}) }}
+
+    <div class="form-group">
+        <label for="exampleInputPassword1">{{'site.form.name.label'|trans({}, 'easy_cms')}}</label>
+        {{ form_widget(form.name, {'attr': {'class': 'form-control'} }) }}
+    </div>
+
+    <div class="form-group">
+        <label for="exampleInputEmail1">{{'site.form.email.label'|trans({}, 'easy_cms')}}</label>
+        {{ form_widget(form.email, {'attr': {'class': 'form-control'} }) }}
+    </div>
+
+    <div class="form-group">
+        <label for="exampleInputEmail1">{{'site.form.message.label'|trans({}, 'easy_cms')}}</label>
+        {{ form_widget(form.message, {'attr': {'class': 'form-control'} }) }}
+    </div>
+    <div class="form-check">
+
+        {{ form_widget(form.acceptsNotifications, { 'attr': {'class': 'form-check-input'} })}}
+
+        {{ form_label(form.acceptsNotifications) }}
+    </div>
+
+{#<label class="custom-checkbox contact-form__check col-12 col-lg-10 offset-lg-1 mb-2 mb-lg-5">#}
+{#        <span class="custom-checkbox__checkmark contact-form__checkmark"></span>#}
+{#        <span class="custom-checkbox__text custom-checkbox__text--white contact-form__check-text">#}
+{#                    {{ form_label(form.acceptsNotifications) }}#}
+{#                </span>#}
+{#    </label>#}
+{#    /{{ form_widget(form.acceptsNotifications, { 'attr': {'class': 'custom-checkbox__input'} })}}#}
+
+    {{ form_widget(form.submit, { 'attr': {'class': 'btn btn-primary' }}) }}
+{{ form_end(form) }}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('contact') }}
+{% endblock %}
+
+
