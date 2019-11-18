@@ -61,7 +61,7 @@ class SiteController extends BaseController
     }
 
     /**
-     * @Route("/{slug}", name="post_detail", methods={"GET"})
+     * @Route("/post/{slug}", name="post_detail", methods={"GET"})
      *
      * @param $slug
      *
@@ -83,7 +83,7 @@ class SiteController extends BaseController
     }
 
     /**
-     * @Route("/contact-us", name="contact", methods={"POST"})
+     * @Route("/contact-us", name="contact", methods={"POST", "GET"})
      *
      * @param Request $request
      *
@@ -105,7 +105,6 @@ class SiteController extends BaseController
                     //$subject = $this->translator->trans('contact.mail.subject');
                     //$this->contactService->sendContactNotification($contact, $subject);
 
-                    // return $this->redirect($this->generateUrl('contact_sent'));
                     return new JsonResponse([
                         'result' => 'success'
                     ]);

@@ -26,6 +26,9 @@ function showSuccessMessage() {
     }
   }
   document.querySelector('.js-formSubmitSuccess').style.display = 'block';
+  setTimeout(function(){
+    document.querySelector('.js-formSubmitSuccess').style.display = 'none';
+  }, 1500);
 }
 
 function showErrorMessage(errorMessage) {
@@ -88,7 +91,14 @@ function sendFormulary(event) {
   }
 }
 
-const form = document.getElementById('js-contact-form');
-if (form !== undefined) {
-  form.addEventListener('submit', sendFormulary);
+function init() {
+
+  const form = document.getElementById('js-contact-form');
+  if (form !== undefined) {
+    form.addEventListener('submit', sendFormulary);
+  }
+  document.querySelector('.js-formSubmitSuccess').style.display = 'none';
+  document.querySelector('.js-formSubmitError').style.display = 'none';
 }
+
+init();

@@ -105,10 +105,10 @@
             <hr class="divider my-4">
 
             <div class="row alert alert-success js-formSubmitSuccess hidden" role="alert">
-                This is a success alert—check it out!
+                {{ 'site.form.success_message'|trans({}, 'easy_cms') }}
             </div>
             <div class="row alert alert-danger js-formSubmitError hidden" role="alert">
-                This is a danger alert—check it out!
+                {{ 'site.form.error_message'|trans({}, 'easy_cms') }}
             </div>
 
             <div class="row justify-content-center">
