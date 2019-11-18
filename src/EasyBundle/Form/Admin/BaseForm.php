@@ -48,7 +48,6 @@ class BaseForm extends AbstractType
         ;
 
         $this->addPublishingFields($builder);
-
     }
 
     protected function addPublishingFields(FormBuilderInterface $builder)

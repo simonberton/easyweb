@@ -12,7 +12,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * @Route("/contact", name="admin_contact_")
+ * @Route("/admin/contact", name="admin_contact_")
  *
  * @param Request $request
  *
@@ -148,7 +148,8 @@ class ContactController extends AbstractController
             }
         }
 
-        return $this->render('@Easy/cms/crud/show.html.twig',
+        return $this->render(
+            '@Easy/cms/crud/show.html.twig',
             [
                 'form' => $form->createView(),
                 'isCreate' => false,

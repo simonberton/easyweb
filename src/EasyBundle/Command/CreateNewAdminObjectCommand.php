@@ -79,7 +79,6 @@ class %s extends BaseEntity
     ', ucfirst($objectName), $objectName, ucfirst($objectName));
 
         file_put_contents(sprintf('src/Entity/%s.php', ucfirst($objectName)), $entity);
-
     }
 
     protected function createRepository($objectName)

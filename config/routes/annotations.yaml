@@ -5,4 +5,4 @@ controllers:
 controllers_easy:
     resource: ../../src/EasyBundle/Controller/
     type: annotation
-    prefix: /admin
+    prefix: /

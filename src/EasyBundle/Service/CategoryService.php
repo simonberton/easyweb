@@ -9,7 +9,6 @@ use App\EasyBundle\Library\AbstractService;
 
 class CategoryService extends AbstractService
 {
-
     public function getEntityClass(): string
     {
         return Category::class;

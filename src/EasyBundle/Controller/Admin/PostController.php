@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * @Route("/post", name="admin_post_")
+ * @Route("/admin/post", name="admin_post_")
  */
 class PostController extends AbstractAdminController
 {

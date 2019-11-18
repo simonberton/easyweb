@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/", name="admin_index")
+     * @Route("/admin/", name="admin_index")
      *
      * @param Request $request
      *
