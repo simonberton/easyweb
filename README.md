@@ -1,4 +1,4 @@
-# Easy Web Admin Symfony 4.3
+# Easy Web Admin Symfony 5.0.2
 
 Easy web admin comes by default with some basic entities:
 - Contact
