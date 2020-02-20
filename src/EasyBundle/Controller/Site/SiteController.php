@@ -6,6 +6,7 @@ namespace App\EasyBundle\Controller\Site;
 use App\EasyBundle\Entity\Contact;
 use App\EasyBundle\Entity\Post;
 use App\EasyBundle\Form\Site\ContactForm;
+use App\EasyBundle\Message\SendContactEmail;
 use App\EasyBundle\Repository\PostRepository;
 use App\EasyBundle\Service\ContactService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as BaseController;
@@ -14,6 +15,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -87,10 +89,10 @@ class SiteController extends BaseController
      *
      * @param Request $request
      *
+     * @param MessageBusInterface $messageBus
      * @return Response|JsonResponse
-     * @throws \Exception
      */
-    public function contact(Request $request)
+    public function contact(Request $request, MessageBusInterface $messageBus)
     {
         $contactResult = null;
 
@@ -102,8 +104,9 @@ class SiteController extends BaseController
             if ($form->isValid()) {
                 try {
                     $this->contactService->create($contact);
-                    //$subject = $this->translator->trans('contact.mail.subject');
-                    //$this->contactService->sendContactNotification($contact, $subject);
+
+                    $sendContactEmail = new SendContactEmail('Contact email bodyHtml');
+                    $messageBus->dispatch($sendContactEmail);
 
                     return new JsonResponse([
                         'result' => 'success'
