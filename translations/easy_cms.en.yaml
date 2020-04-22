@@ -48,12 +48,12 @@ delete_success_title: Object deleted successfuly
 delete_success_message: Object and all relations deleted
 
 
-site.title: 'Hello World'
+site.title: 'Greta'
 site.about: 'About'
 site.posts: 'Posts'
 site.contact: 'Contact us'
-site.homepage_header: 'is this is a test?'
-site.homepage_header_text: 'This is an example of a long text that goes on the homepage header'
+site.homepage_header: 'GRETA'
+site.homepage_header_text: 'Aca va el texto del proyecto Fermin!!!'
 site.homepage_header_link: 'internal_url'
 site.homepage_header_link_text: 'Go to'
 site.homepage_header_img: 'header-image.jpg'
