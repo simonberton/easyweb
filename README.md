@@ -55,7 +55,7 @@ yarn install
 Create docker-compose environment file
 
 ```bash
-cp infra/docker/local/dist.env infra/docker/local/.env
+cp infra/docker/dist.env infra/local/.env
 ```
 
 Change the environment variables if needed. Defaults may suit your needs.
@@ -63,14 +63,14 @@ Change the environment variables if needed. Defaults may suit your needs.
 Build the containers and start them
 
 ```bash
-bin/docker build
+docker-compose up --build -d
 ```
 
 ## Database
 
 ```bash
-docker exec -t easy-dbserver mysql -e "CREATE DATABASE IF NOT EXISTS easy"
-docker exec -t easy-dbserver mysql -e "GRANT ALL ON easy.* TO 'easy'@'%' IDENTIFIED BY 'easy'"
+docker exec -t easy-dbserver mysql -e "CREATE DATABASE IF NOT EXISTS greta"
+docker exec -t easy-dbserver mysql -e "GRANT ALL ON greta.* TO 'greta'@'%' IDENTIFIED BY 'greta'"
 ```
 
 ## App vendors
@@ -110,12 +110,12 @@ docker exec -it easy-php bin/console doctrine:fixtures:load
 Update your /etc/host file:
 
 ```bash
-echo "127.0.0.1 easyweb.loc" >> /etc/hosts
+echo "127.0.0.1 greta.loc" >> /etc/hosts
 ```
 
 Open a browser and go to:
 
-* http://easy.loc/admin
+* http://greta.loc/admin
 User: admin@test.com
 Password: admin
 

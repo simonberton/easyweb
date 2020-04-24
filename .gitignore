@@ -8,6 +8,8 @@
 /var/
 /vendor/
 /infra/docker/_db/
+.idea/
+package-lock.json
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
