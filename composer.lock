@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d834ba375bdf13838c45dfd0b8517728",
+    "content-hash": "a1879eba54415c14f1f8ad8bb51c6aac",
     "packages": [
         {
             "name": "antishov/doctrine-extensions-bundle",
@@ -3206,16 +3206,16 @@
         },
         {
             "name": "symfony/form",
-            "version": "v5.0.2",
+            "version": "v5.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/form.git",
-                "reference": "c57a9fe108cc7747d4e8dfb770a8066b4e906acc"
+                "reference": "2b8e26176c4b88ac44d822bb78dad3403d37ff83"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/form/zipball/c57a9fe108cc7747d4e8dfb770a8066b4e906acc",
-                "reference": "c57a9fe108cc7747d4e8dfb770a8066b4e906acc",
+                "url": "https://api.github.com/repos/symfony/form/zipball/2b8e26176c4b88ac44d822bb78dad3403d37ff83",
+                "reference": "2b8e26176c4b88ac44d822bb78dad3403d37ff83",
                 "shasum": ""
             },
             "require": {
@@ -3286,7 +3286,21 @@
             ],
             "description": "Symfony Form Component",
             "homepage": "https://symfony.com",
-            "time": "2019-12-16T11:08:25+00:00"
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-03-27T16:56:45+00:00"
         },
         {
             "name": "symfony/framework-bundle",
@@ -7196,5 +7210,6 @@
         "ext-ctype": "*",
         "ext-iconv": "*"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }

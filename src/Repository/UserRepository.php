@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,6 +19,75 @@ class UserRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
+    }
+
+    /**
+     * @param string $filter
+     * @param array|null $orderBy
+     * @param int|null $limit
+     * @param int|null $offset
+     *
+     * @return mixed
+     */
+    public function getAll(?string $filter, array $orderBy = null, int $limit = null, int $offset = null)
+    {
+        $alias = 't';
+
+        $qb = $this->createQueryBuilder($alias);
+
+        $this->setFilter($alias, $qb, $filter);
+
+        if ($orderBy && count($orderBy)) {
+            foreach ($orderBy as $field => $dir) {
+                $qb->orderBy(sprintf('%s.%s', $alias, $field), $dir);
+            }
+        }
+
+        if (isset($limit) && isset($offset)) {
+            $qb->setFirstResult($offset);
+            $qb->setMaxResults($limit);
+        }
+
+        return $qb->getQuery()->execute();
+    }
+
+    /**
+     *
+     * @return int
+     * @throws \Exception
+     */
+    public function getAllCount()
+    {
+        $alias = 't';
+
+        $qb = $this->createQueryBuilder($alias)->select(sprintf(sprintf('count(%s.id)', $alias)));
+
+        try {
+            return $qb->getQuery()->getSingleScalarResult();
+        } catch (NonUniqueResultException $e) {
+            return 0;
+        }
+    }
+
+    /**
+     * @param string $alias
+     * @param QueryBuilder $qb
+     * @param string $filter
+     */
+    protected function setFilter(string $alias, QueryBuilder $qb, ?string $filter)
+    {
+        if (!$filter) {
+            return;
+        }
+        foreach ($this->getFilterFields() as $field) {
+            $qb->orWhere(sprintf('%s LIKE :%s_filter', sprintf('%s.%s', $alias, $field), $field));
+            $qb->setParameter(sprintf('%s_filter', $field), sprintf('%%%s%%', $filter));
+        }
+    }
+
+    protected function getFilterFields()
+    {
+        return ['email', 'firstName', 'lastName'];
     }
 
     // /**

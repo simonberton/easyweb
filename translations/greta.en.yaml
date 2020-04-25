@@ -1,0 +1,3 @@
+site.register_header_img: 'recycle.jpeg'
+site.generador_created: 'Generador creado con éxito'
+generador.register.title: 'Registro Generador'
