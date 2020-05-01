@@ -34,21 +34,7 @@ You'll need the following software installed on your machine:
 * [Docker](https://docs.docker.com/install/)
 * [Docker Compose](https://docs.docker.com/compose/install/)
 * [PHP-cs-fixer](http://cs.sensiolabs.org/)
-* Yarn
-```bash
-sudo apt-get install -y nodejs
 
-curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-
-echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-
-sudo apt-get update && sudo apt-get install -y yarn
-
-export PATH="$PATH:`yarn global bin`"
-
-composer require encore
-
-yarn install 
 ```
 ## Docker
 
@@ -97,7 +83,7 @@ docker exec -it easy-php bin/console doctrine:schema:create
 
 Build assets
 ```bash
-yarn
+docker exec -it easy-php yarn encore dev
 ```
 
 Load Fixtures
