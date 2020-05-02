@@ -56,6 +56,8 @@ class CreateNewAdminObjectCommand extends Command
         $command->run($updateInput, $output);
 
         $output->writeln('This is the end...');
+
+        return 0;
     }
 
     protected function createEntity($objectName)
