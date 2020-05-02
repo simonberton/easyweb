@@ -57,6 +57,7 @@ docker-compose up --build -d
 ```bash
 docker exec -t easy-dbserver mysql -e "CREATE DATABASE IF NOT EXISTS greta"
 docker exec -t easy-dbserver mysql -e "GRANT ALL ON greta.* TO 'greta'@'%' IDENTIFIED BY 'greta'"
+docker exec -t easy-dbserver mysql -e "FLUSH PRIVILEGES"
 ```
 
 ## App vendors

@@ -6,7 +6,10 @@
             "branch": "master",
             "version": "1.4",
             "ref": "6c1ceb662f8997085f739cd089bfbef67f245983"
-        }
+        },
+        "files": [
+            "config/packages/stof_doctrine_extensions.yaml"
+        ]
     },
     "behat/transliterator": {
         "version": "v1.3.0"
