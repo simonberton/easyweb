@@ -26,7 +26,7 @@ class CreateNewAdminObjectCommand extends Command
             ->addArgument('name', InputArgument::REQUIRED, 'Object Name');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('<info>Starting...</info>');
         $output->writeln([

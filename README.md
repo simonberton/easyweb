@@ -55,8 +55,8 @@ docker-compose up --build -d
 ## Database
 
 ```bash
-docker exec -t easy-dbserver mysql -e "CREATE DATABASE IF NOT EXISTS greta"
-docker exec -t easy-dbserver mysql -e "GRANT ALL ON greta.* TO 'greta'@'%' IDENTIFIED BY 'greta'"
+docker exec -t easy-dbserver mysql -e "CREATE DATABASE IF NOT EXISTS easy"
+docker exec -t easy-dbserver mysql -e "GRANT ALL ON easy.* TO 'easy'@'%' IDENTIFIED BY 'easy'"
 docker exec -t easy-dbserver mysql -e "FLUSH PRIVILEGES"
 ```
 
@@ -97,12 +97,12 @@ docker exec -it easy-php bin/console doctrine:fixtures:load
 Update your /etc/host file:
 
 ```bash
-echo "127.0.0.1 greta.loc" >> /etc/hosts
+echo "127.0.0.1 easy.loc" >> /etc/hosts
 ```
 
 Open a browser and go to:
 
-* http://greta.loc/admin
+* http://easy.loc/admin
 User: admin@test.com
 Password: admin
 
