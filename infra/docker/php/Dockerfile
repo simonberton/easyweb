@@ -21,7 +21,8 @@ RUN apt-get update && apt-get install -y \
     vim \
     jq \
     acl \
-    && echo 'alias sf="php bin/console"' >> ~/.bashrc
+    && echo 'alias sf="php bin/console"' >> ~/.bashrc \
+    
 RUN docker-php-ext-configure gd --with-jpeg --with-freetype
 RUN docker-php-ext-install sockets pdo pdo_mysql zip xsl gd intl opcache exif mbstring
 
