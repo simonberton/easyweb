@@ -1,5 +1,5 @@
 security:
-    encoders:
+    password_hashers:
         App\Entity\User:
             algorithm: auto
 
@@ -15,9 +15,7 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            anonymous: true
-            guard:
-                authenticators:
+            custom_authenticators:
                     - App\Security\LoginFormAuthenticator
             logout:
                 path: app_logout
