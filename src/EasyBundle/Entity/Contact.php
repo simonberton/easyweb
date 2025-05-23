@@ -3,12 +3,13 @@
 
 namespace App\EasyBundle\Entity;
 
+use App\EasyBundle\Repository\ContactRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Table(name: 'easy_core_contact')]
-#[ORM\Entity(repositoryClass: \App\EasyBundle\Repository\ContactRepository::class)]
+#[ORM\Entity(repositoryClass: ContactRepository::class)]
 class Contact
 {
     #[ORM\Id]

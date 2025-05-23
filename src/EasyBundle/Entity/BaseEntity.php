@@ -4,6 +4,7 @@
 namespace App\EasyBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation\Timestampable;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -24,12 +25,17 @@ abstract class BaseEntity
     #[Assert\Length(max: 128)]
     private $title;
 
-    /**
-     * @Gedmo\Slug(updatable=false, unique=true, fields={"title"})
-     */
     #[ORM\Column(name: 'slug', type: 'string', length: 128, nullable: false)]
     #[Assert\Length(max: 128)]
     private $slug;
+
+    #[Timestampable(on: 'create')]
+    #[ORM\Column(name: 'created_at', type: 'datetime', nullable: false)]
+    private \DateTimeInterface $createdAt;
+
+    #[Timestampable(on: 'update')]
+    #[ORM\Column(name: 'modified_at', type: 'datetime', nullable: true)]
+    private ?\DateTimeInterface $modifiedAt = null;
 
     #[ORM\Column(name: 'description', type: 'string', length: 256, nullable: true)]
     #[Assert\Length(max: 256)]
@@ -48,20 +54,6 @@ abstract class BaseEntity
     #[Assert\NotBlank]
     #[Assert\Length(max: 32)]
     private $publishStatus;
-
-    /**
-     * @Gedmo\Timestampable(on="create")
-     */
-    #[ORM\Column(name: 'created_at', type: 'datetime', nullable: false)]
-    #[Assert\DateTime]
-    private $createdAt;
-
-    /**
-     * @Gedmo\Timestampable(on="update")
-     */
-    #[ORM\Column(name: 'modified_at', type: 'datetime', nullable: true)]
-    #[Assert\DateTime]
-    private $modifiedAt;
 
     public function getId(): int
     {

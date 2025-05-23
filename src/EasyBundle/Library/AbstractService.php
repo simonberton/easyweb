@@ -96,6 +96,13 @@ abstract class AbstractService
         }
 
         try {
+            // We must set dates and slug if entity has it
+            $entity->setCreatedAt(new \DateTime());
+            $entity->setModifiedAt(new \DateTime());
+            if (method_exists($entity, 'setSlug')) {
+                $entity->setSlug($entity->getTitle());
+            }
+
             $this->em->persist($entity);
             $this->em->flush();
 
