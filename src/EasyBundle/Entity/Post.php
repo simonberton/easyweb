@@ -3,10 +3,11 @@
 
 namespace App\EasyBundle\Entity;
 
+use App\EasyBundle\Repository\PostRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'easy_core_post')]
-#[ORM\Entity(repositoryClass: \App\EasyBundle\Repository\PostRepository::class)]
+#[ORM\Entity(repositoryClass: PostRepository::class)]
 class Post extends BaseEntity
 {
     #[ORM\Column(name: 'image_filename', type: 'string', nullable: true)]

@@ -10,21 +10,22 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Attribute\AsCommand;
 
-#[AsCommand(name: 'easy:create-admin-object')]
+#[AsCommand(
+    name: 'easy:create-admin-object',
+    description: 'Creates a new admin object.',
+    aliases: [],
+    hidden: false
+)]
 class CreateNewAdminObjectCommand extends Command
 {
-    // the name of the command (the part after "bin/console")
-    protected static $defaultName = 'easy:create-admin-object';
-
-    protected function configure()
+    protected function configure(): void
     {
         $this
-            // the short description shown while running "php bin/console list"
-            ->setDescription('Creates a new admin object.')
-
-            ->setHelp('This command allows you to create a a new admin object, 
-            by creating the entity, form, controller, service and repository.')
-
+            ->setHelp(<<<'HELP'
+This command allows you to create a new admin object by creating
+the entity, form, controller, service, and repository.
+HELP
+            )
             ->addArgument('name', InputArgument::REQUIRED, 'Object Name');
     }
 
@@ -37,41 +38,45 @@ class CreateNewAdminObjectCommand extends Command
             '',
         ]);
 
-        $objectName = $input->getArgument('name');
+        $objectName = ucfirst($input->getArgument('name'));
 
         $this->createEntity($objectName);
         $output->writeln('Entity Created');
+
         $this->createRepository($objectName);
         $output->writeln('Repository Created');
+
         $this->createService($objectName);
         $output->writeln('Service Created');
+
         $this->createForm($objectName);
         $output->writeln('Form Created');
+
         $this->createController($objectName);
         $output->writeln('Controller Created');
 
-        $command = $this->getApplication()->find('d:s:u');
+        // Run doctrine:schema:update --force command (better use full name)
+        $command = $this->getApplication()->find('doctrine:schema:update');
         $updateInput = new ArrayInput([
-            'command' => 'd:s:u',
+            'command' => 'doctrine:schema:update',
             '--force'  => true,
         ]);
         $command->run($updateInput, $output);
 
-        $output->writeln('This is the end...');
+        $output->writeln('<info>This is the end...</info>');
 
-        return 0;
+        return Command::SUCCESS;
     }
 
-    protected function createEntity($objectName)
+    protected function createEntity(string $objectName): void
     {
         $entity = sprintf('<?php
 
-
 namespace App\Entity;
-        
+
 use App\EasyBundle\Entity\BaseEntity;
 use Doctrine\ORM\Mapping as ORM;
-        
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\%sRepository")
  * @ORM\Table(name="%s")
@@ -80,15 +85,18 @@ class %s extends BaseEntity
 {
 
 }
-    ', ucfirst($objectName), $objectName, ucfirst($objectName));
+',
+            $objectName,
+            strtolower($objectName),
+            $objectName
+        );
 
-        file_put_contents(sprintf('src/Entity/%s.php', ucfirst($objectName)), $entity);
+        file_put_contents(sprintf('src/Entity/%s.php', $objectName), $entity);
     }
 
-    protected function createRepository($objectName)
+    protected function createRepository(string $objectName): void
     {
         $repository = sprintf('<?php
-
 
 namespace App\Repository;
 
@@ -97,26 +105,28 @@ use App\EasyBundle\Library\AbstractRepository;
 
 class %sRepository extends AbstractRepository
 {
-
-    public function getEntityClass()
+    public function getEntityClass(): string
     {
         return %s::class;
     }
 
-    public function getFilterFields()
+    public function getFilterFields(): array
     {
         return [\'title\'];
     }
 }
-    ', ucfirst($objectName), ucfirst($objectName), ucfirst($objectName));
+',
+            $objectName,
+            $objectName,
+            $objectName
+        );
 
-        file_put_contents(sprintf('src/Repository/%sRepository.php', ucfirst($objectName)), $repository);
+        file_put_contents(sprintf('src/Repository/%sRepository.php', $objectName), $repository);
     }
 
-    protected function createService($objectName)
+    protected function createService(string $objectName): void
     {
         $service = sprintf('<?php
-
 
 namespace App\Service;
 
@@ -126,7 +136,6 @@ use App\EasyBundle\Library\AbstractService;
 
 class %sService extends AbstractService
 {
-
     public function getEntityClass(): string
     {
         return %s::class;
@@ -151,16 +160,20 @@ class %sService extends AbstractService
         ];
     }
 }
+',
+            $objectName,
+            $objectName,
+            $objectName,
+            $objectName,
+            $objectName
+        );
 
-    ', ucfirst($objectName), ucfirst($objectName), ucfirst($objectName), ucfirst($objectName), ucfirst($objectName));
-
-        file_put_contents(sprintf('src/Service/%sService.php', ucfirst($objectName)), $service);
+        file_put_contents(sprintf('src/Service/%sService.php', $objectName), $service);
     }
 
-    protected function createForm($objectName)
+    protected function createForm(string $objectName): void
     {
         $form = sprintf('<?php
-
 
 namespace App\Form\Admin;
 
@@ -170,28 +183,30 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class %sForm extends BaseForm
 {
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             \'data_class\' => %s::class,
             \'attr\' => [
                 \'novalidate\' => \'novalidate\',
                 \'autocomplete\' => \'off\',
-                \'accept-charset\'=> \'UTF-8\'
-            ]
+                \'accept-charset\' => \'UTF-8\'
+            ],
         ]);
     }
 }
+',
+            $objectName,
+            $objectName,
+            $objectName
+        );
 
-    ', ucfirst($objectName), ucfirst($objectName), ucfirst($objectName));
-
-        file_put_contents(sprintf('src/Form/Admin/%sForm.php', ucfirst($objectName)), $form);
+        file_put_contents(sprintf('src/Form/Admin/%sForm.php', $objectName), $form);
     }
 
-    protected function createController($objectName)
+    protected function createController(string $objectName): void
     {
         $controller = sprintf('<?php
-
 
 namespace App\Controller\Admin;
 
@@ -206,13 +221,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class %sController extends AbstractAdminController
 {
-    protected $service;
+    protected %sService $service;
 
     public function __construct(%sService $service, TranslatorInterface $translator)
     {
         $this->service = $service;
 
-       parent::__construct($translator);
+        parent::__construct($translator);
     }
 
     protected function getService(): AbstractService
@@ -230,10 +245,16 @@ class %sController extends AbstractAdminController
         return \'admin_%s\';
     }
 }
+',
+            $objectName,
+            strtolower($objectName),
+            strtolower($objectName),
+            $objectName,
+            $objectName,
+            $objectName,
+            strtolower($objectName)
+        );
 
-
-    ', ucfirst($objectName), $objectName, $objectName, ucfirst($objectName), ucfirst($objectName), $objectName);
-
-        file_put_contents(sprintf('src/Controller/Admin/%sController.php', ucfirst($objectName)), $controller);
+        file_put_contents(sprintf('src/Controller/Admin/%sController.php', $objectName), $controller);
     }
 }

@@ -12,13 +12,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * @Route("/admin/contact", name="admin_contact_")
  *
  * @param Request $request
  *
  * @return Response
  * @throws \Exception
  */
+#[Route(path: '/admin/contact', name: 'admin_contact_')]
 class ContactController extends AbstractController
 {
     protected $service;
@@ -45,13 +45,13 @@ class ContactController extends AbstractController
         return 'admin_contact';
     }
     /**
-     * @Route("/", name="index")
      *
      * @param Request $request
      *
      * @return Response
      * @throws \Exception
      */
+    #[Route(path: '/', name: 'index')]
     public function index(Request $request)
     {
         $page = (int)$request->get('page', 1);
@@ -104,7 +104,6 @@ class ContactController extends AbstractController
     }
 
     /**
-     * @Route ("/edit/{id}", name="edit")
      *
      * @param Request $request
      * @param int $id
@@ -112,6 +111,7 @@ class ContactController extends AbstractController
      * @return Response
      * @throws \Exception
      */
+    #[Route(path: '/edit/{id}', name: 'edit')]
     public function edit(Request $request, int $id): Response
     {
         $entity = $this->service->get($id);
@@ -139,7 +139,7 @@ class ContactController extends AbstractController
 
                     $this->addFlash('cms_success', $this->translator->trans('edit_success', [], $this->getTranslatorPrefix()));
 
-                    return $this->redirect($this->generateUrl($this->getRoutePrefix() . '_index'));
+                    return $this->redirectToRoute($this->getRoutePrefix() . '_index');
                 } catch (\Exception $e) {
                     $this->addFlash('cms_error', $this->translator->trans('edit_error', [], $this->getTranslatorPrefix()));
                 }
@@ -160,13 +160,12 @@ class ContactController extends AbstractController
     }
 
     /**
-     * @Route ("/delete/{id}", name="delete", methods="POST"))
      *
      * @param Request $request
      * @param int $id
-     *
      * @return Response
      */
+    #[Route(path: '/delete/{id}', name: 'delete', methods: 'POST')]
     public function delete(Request $request, int $id): Response
     {
         if (!$request->isXmlHttpRequest()) {

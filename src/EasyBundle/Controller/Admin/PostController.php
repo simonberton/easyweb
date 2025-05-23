@@ -9,9 +9,7 @@ use App\EasyBundle\Service\PostService;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @Route("/admin/post", name="admin_post_")
- */
+#[Route(path: '/admin/post', name: 'admin_post_')]
 class PostController extends AbstractAdminController
 {
     protected $service;

@@ -19,9 +19,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @Route("/", name="site_")
- */
+#[Route(path: '/', name: 'site_')]
 class SiteController extends BaseController
 {
     /** @var PostRepository  */
@@ -44,13 +42,13 @@ class SiteController extends BaseController
     }
 
     /**
-     * @Route("/", name="homepage")
      *
      * @param Request $request
      *
      * @return Response
      * @throws \Exception
      */
+    #[Route(path: '/', name: 'homepage')]
     public function index(Request $request)
     {
         $posts = $this->postRepository->getForHomepage($this->getParameter('site_homepage_posts_limit'));
@@ -63,13 +61,13 @@ class SiteController extends BaseController
     }
 
     /**
-     * @Route("/post/{slug}", name="post_detail", methods={"GET"})
      *
      * @param $slug
      *
      * @return Response
      * @throws \Exception
      */
+    #[Route(path: '/post/{slug}', name: 'post_detail', methods: ['GET'])]
     public function postDetail($slug)
     {
         $post = $this->postRepository->getAvailableBySlug($slug);
@@ -85,13 +83,13 @@ class SiteController extends BaseController
     }
 
     /**
-     * @Route("/contact-us", name="contact", methods={"POST", "GET"})
      *
      * @param Request $request
      *
      * @param MessageBusInterface $messageBus
      * @return Response|JsonResponse
      */
+    #[Route(path: '/contact-us', name: 'contact', methods: ['POST', 'GET'])]
     public function contact(Request $request, MessageBusInterface $messageBus)
     {
         $contactResult = null;

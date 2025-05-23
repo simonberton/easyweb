@@ -10,14 +10,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/admin/", name="admin_index")
      *
      * @param Request $request
      *
      * @return Response
      * @throws \Exception
      */
-    public function index(Request $request)
+    #[Route(path: '/admin/', name: 'admin_index')]
+    public function index()
     {
         return $this->render('@Easy/cms/home.html.twig');
     }

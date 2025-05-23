@@ -3,12 +3,13 @@
 
 namespace App\EasyBundle\Entity;
 
+use App\EasyBundle\Repository\ContactRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Table(name: 'easy_core_contact')]
-#[ORM\Entity(repositoryClass: \App\EasyBundle\Repository\ContactRepository::class)]
+#[ORM\Entity(repositoryClass: ContactRepository::class)]
 class Contact
 {
     #[ORM\Id]
@@ -16,19 +17,15 @@ class Contact
     #[ORM\Column(name: 'contact_id', type: 'integer')]
     private $id;
 
-    /**
-     * @Assert\NotBlank()
-     * @Assert\Length(max=128)
-     */
     #[ORM\Column(name: 'contact_name', type: 'string', length: 128, nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 128)]
     private $name;
 
-    /**
-     * @Assert\NotBlank()
-     * @Assert\Length(max=128)
-     * @Assert\Email()
-     */
     #[ORM\Column(name: 'contact_email', type: 'string', length: 128, nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 128)]
+    #[Assert\Email]
     private $email;
 
     #[ORM\Column(name: 'contact_phone', type: 'string', length: 32, nullable: true)]
@@ -47,10 +44,10 @@ class Contact
     private $isRead = false;
 
     /**
-     * @Assert\DateTime()
      * @Gedmo\Timestampable(on="create")
      */
     #[ORM\Column(name: 'contact_created_at', type: 'datetime', nullable: false)]
+    #[Assert\DateTime]
     private $createdAt;
 
     public function getId(): ?int

@@ -19,7 +19,7 @@ import $ from 'jquery';
 
 require('@fortawesome/fontawesome-free/js/all.js');
 
-import 'bootstrap';
+import * as bootstrap from 'bootstrap';
 import 'bootstrap-datepicker';
 
 if ($('.js-datePicker') !== undefined) {

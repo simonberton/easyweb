@@ -3,8 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\User;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\QueryBuilder;
 
@@ -14,11 +14,11 @@ use Doctrine\ORM\QueryBuilder;
  * @method User[]    findAll()
  * @method User[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class UserRepository extends ServiceEntityRepository
+class UserRepository extends EntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(EntityManagerInterface $em)
     {
-        parent::__construct($registry, User::class);
+        parent::__construct($em, $em->getClassMetadata(User::class));
     }
 
     /**
