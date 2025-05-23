@@ -8,7 +8,9 @@ use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Attribute\AsCommand;
 
+#[AsCommand(name: 'easy:create-admin-object')]
 class CreateNewAdminObjectCommand extends Command
 {
     // the name of the command (the part after "bin/console")
@@ -26,7 +28,7 @@ class CreateNewAdminObjectCommand extends Command
             ->addArgument('name', InputArgument::REQUIRED, 'Object Name');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('<info>Starting...</info>');
         $output->writeln([

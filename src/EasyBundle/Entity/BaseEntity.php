@@ -7,82 +7,67 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 
-/**
- * @ORM\MappedSuperclass
- */
+#[ORM\MappedSuperclass]
 abstract class BaseEntity
 {
     const STATUS_PUBLISHED = 'published';
     const STATUS_UNPUBLISHED = 'unpublished';
     const STATUS_DRAFT = 'draft';
 
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(name="id", type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(name: 'id', type: 'integer')]
     private $id;
 
     /**
      * @Assert\NotBlank()
      * @Assert\Length(max=128)
-     * @ORM\Column(name="title", type="string", length=128, nullable=false)
      */
+    #[ORM\Column(name: 'title', type: 'string', length: 128, nullable: false)]
     private $title;
 
     /**
      * @Assert\Length(max=128)
      *
-     * @ORM\Column(name="slug", type="string", length=128, nullable=false)
      * @Gedmo\Slug(updatable=false, unique=true, fields={"title"})
      */
+    #[ORM\Column(name: 'slug', type: 'string', length: 128, nullable: false)]
     private $slug;
 
     /**
      * @Assert\Length(max=256)
-     * @ORM\Column(name="description", type="string", length=256, nullable=true)
      */
+    #[ORM\Column(name: 'description', type: 'string', length: 256, nullable: true)]
     private $description;
 
-    /**
-     * @ORM\Column(name="content", type="text", nullable=true)
-     */
+    #[ORM\Column(name: 'content', type: 'text', nullable: true)]
     private $content;
 
-    /**
-     *
-     * @ORM\Column(name="publish_since", type="text", nullable=true)
-     */
+    #[ORM\Column(name: 'publish_since', type: 'text', nullable: true)]
     private $publishSince;
 
-    /**
-     *
-     * @ORM\Column(name="publish_until", type="text", nullable=true)
-     */
+    #[ORM\Column(name: 'publish_until', type: 'text', nullable: true)]
     private $publishUntil;
 
     /**
      * @Assert\NotBlank()
      * @Assert\Length(max=32)
-     *
-     * @ORM\Column(name="publish_status", type="string", length=32, nullable=false)
      */
+    #[ORM\Column(name: 'publish_status', type: 'string', length: 32, nullable: false)]
     private $publishStatus;
 
     /**
      * @Assert\DateTime()
      * @Gedmo\Timestampable(on="create")
-     *
-     * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
+    #[ORM\Column(name: 'created_at', type: 'datetime', nullable: false)]
     private $createdAt;
 
     /**
      * @Assert\DateTime()
      * @Gedmo\Timestampable(on="update")
-     *
-     * @ORM\Column(name="modified_at", type="datetime", nullable=true)
      */
+    #[ORM\Column(name: 'modified_at', type: 'datetime', nullable: true)]
     private $modifiedAt;
 
     public function getId(): int
