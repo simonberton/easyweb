@@ -19,25 +19,20 @@ abstract class BaseEntity
     #[ORM\Column(name: 'id', type: 'integer')]
     private $id;
 
-    /**
-     * @Assert\NotBlank()
-     * @Assert\Length(max=128)
-     */
     #[ORM\Column(name: 'title', type: 'string', length: 128, nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 128)]
     private $title;
 
     /**
-     * @Assert\Length(max=128)
-     *
      * @Gedmo\Slug(updatable=false, unique=true, fields={"title"})
      */
     #[ORM\Column(name: 'slug', type: 'string', length: 128, nullable: false)]
+    #[Assert\Length(max: 128)]
     private $slug;
 
-    /**
-     * @Assert\Length(max=256)
-     */
     #[ORM\Column(name: 'description', type: 'string', length: 256, nullable: true)]
+    #[Assert\Length(max: 256)]
     private $description;
 
     #[ORM\Column(name: 'content', type: 'text', nullable: true)]
@@ -49,25 +44,23 @@ abstract class BaseEntity
     #[ORM\Column(name: 'publish_until', type: 'text', nullable: true)]
     private $publishUntil;
 
-    /**
-     * @Assert\NotBlank()
-     * @Assert\Length(max=32)
-     */
     #[ORM\Column(name: 'publish_status', type: 'string', length: 32, nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 32)]
     private $publishStatus;
 
     /**
-     * @Assert\DateTime()
      * @Gedmo\Timestampable(on="create")
      */
     #[ORM\Column(name: 'created_at', type: 'datetime', nullable: false)]
+    #[Assert\DateTime]
     private $createdAt;
 
     /**
-     * @Assert\DateTime()
      * @Gedmo\Timestampable(on="update")
      */
     #[ORM\Column(name: 'modified_at', type: 'datetime', nullable: true)]
+    #[Assert\DateTime]
     private $modifiedAt;
 
     public function getId(): int

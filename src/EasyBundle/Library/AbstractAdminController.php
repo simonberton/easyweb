@@ -16,13 +16,13 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as BaseController;
 
 /**
- * @Route("/admin", name="easy_admin_")
  *
  * @param Request $request
  *
  * @return Response
  * @throws \Exception
  */
+#[Route(path: '/admin', name: 'easy_admin_')]
 abstract class AbstractAdminController extends BaseController
 {
     const EVENT_CREATE_NEW_ENTITY = 'create.new_entity';
@@ -59,13 +59,13 @@ abstract class AbstractAdminController extends BaseController
     }
 
     /**
-     * @Route("/", name="index")
      *
      * @param Request $request
      *
      * @return Response
      * @throws \Exception
      */
+    #[Route(path: '/', name: 'index')]
     public function index(Request $request): Response
     {
         $page = (int)$request->get('page', 1);
@@ -118,7 +118,6 @@ abstract class AbstractAdminController extends BaseController
     }
 
     /**
-     * @Route("/create", name="create")
      *
      * @param Request $request
      * @param UploaderHelper $uploaderHelper
@@ -126,6 +125,7 @@ abstract class AbstractAdminController extends BaseController
      * @return Response
      * @throws \Exception
      */
+    #[Route(path: '/create', name: 'create')]
     public function create(Request $request, UploaderHelper $uploaderHelper): Response
     {
         $entity = $this->getService()->getEntity();
@@ -159,7 +159,7 @@ abstract class AbstractAdminController extends BaseController
 
                     $this->addFlash('cms_success', $this->trans('create_success', [], $this->getTranslatorPrefix()));
 
-                    return $this->redirect($this->generateUrl($this->getRoutePrefix() . '_index'));
+                    return $this->redirectToRoute($this->getRoutePrefix() . '_index');
                 } catch (\Exception $e) {
                     $this->addFlash('cms_error', $this->trans('create_error', [], $this->getTranslatorPrefix()));
                 }
@@ -178,7 +178,6 @@ abstract class AbstractAdminController extends BaseController
     }
 
     /**
-     * @Route ("/edit/{id}", name="edit")
      *
      * @param Request $request
      * @param int $id
@@ -187,6 +186,7 @@ abstract class AbstractAdminController extends BaseController
      * @return Response
      * @throws \Exception
      */
+    #[Route(path: '/edit/{id}', name: 'edit')]
     public function edit(Request $request, int $id, UploaderHelper $uploaderHelper): Response
     {
         $entity = $this->getService()->get($id);
@@ -215,7 +215,7 @@ abstract class AbstractAdminController extends BaseController
 
                 $this->addFlash('cms_success', $this->trans('edit_success', [], $this->getTranslatorPrefix()));
 
-                return $this->redirect($this->generateUrl($this->getRoutePrefix() . '_index'));
+                return $this->redirectToRoute($this->getRoutePrefix() . '_index');
             } catch (\Exception $e) {
                 $this->addFlash('cms_error', $this->trans('edit_error', [], $this->getTranslatorPrefix()));
             }
@@ -235,13 +235,12 @@ abstract class AbstractAdminController extends BaseController
     }
 
     /**
-     * @Route ("/delete/{id}", name="delete", methods="POST"))
      *
      * @param Request $request
      * @param int $id
-     *
      * @return Response
      */
+    #[Route(path: '/delete/{id}', name: 'delete', methods: 'POST')]
     public function delete(Request $request, int $id): Response
     {
         if (!$request->isXmlHttpRequest()) {

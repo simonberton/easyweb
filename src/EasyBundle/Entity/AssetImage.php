@@ -23,24 +23,24 @@ class AssetImage
     private $mimeType;
 
     /**
-     * @Assert\DateTime()
      * @Gedmo\Timestampable(on="create")
      */
     #[ORM\Column(name: 'image_created_at', type: 'datetime', nullable: false)]
+    #[Assert\DateTime]
     private $createdAt;
 
     /**
-     * @Assert\DateTime()
      * @Gedmo\Timestampable(on="update")
      */
     #[ORM\Column(name: 'image_modified_at', type: 'datetime', nullable: false)]
+    #[Assert\DateTime]
     private $modifiedAt;
 
     /**
-     * @Assert\Length(max=128)
      * @Gedmo\Blameable(on="create")
      */
     #[ORM\Column(name: 'image_created_by', type: 'string', length: 128, nullable: true)]
+    #[Assert\Length(max: 128)]
     private $createdBy;
 
     public function __toString() : string

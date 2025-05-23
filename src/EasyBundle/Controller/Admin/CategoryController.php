@@ -9,9 +9,7 @@ use App\EasyBundle\Service\CategoryService;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @Route("/admin/category", name="admin_category_")
- */
+#[Route(path: '/admin/category', name: 'admin_category_')]
 class CategoryController extends AbstractAdminController
 {
     protected $service;

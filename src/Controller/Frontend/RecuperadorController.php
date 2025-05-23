@@ -13,14 +13,10 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-/**
- * @Route("/recuperador", name="app_recuperador")
- */
+#[Route(path: '/recuperador', name: 'app_recuperador')]
 class RecuperadorController extends AbstractController
 {
-    /**
-     * @Route("/login", name="_login")
-     */
+    #[Route(path: '/login', name: '_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         // if ($this->getUser()) {
@@ -35,17 +31,13 @@ class RecuperadorController extends AbstractController
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
-    /**
-     * @Route("/logout", name="_logout")
-     */
+    #[Route(path: '/logout', name: '_logout')]
     public function logout()
     {
         throw new \Exception('This method can be blank - it will be intercepted by the logout key on your firewall');
     }
 
-    /**
-     * @Route("/registro", name="_register")
-     */
+    #[Route(path: '/registro', name: '_register')]
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
     {
         $user = new User();

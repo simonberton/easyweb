@@ -9,9 +9,7 @@ use App\Service\RecolectorService;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @Route("/admin/recolector", name="admin_recolector_")
- */
+#[Route(path: '/admin/recolector', name: 'admin_recolector_')]
 class RecolectorController extends AbstractAdminController
 {
     protected $service;

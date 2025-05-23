@@ -9,9 +9,7 @@ use App\Service\GeneradorService;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @Route("/admin/generador", name="admin_generador_")
- */
+#[Route(path: '/admin/generador', name: 'admin_generador_')]
 class GeneradorController extends AbstractAdminController
 {
     protected $service;
