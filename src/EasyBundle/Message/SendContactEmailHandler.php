@@ -3,10 +3,9 @@
 
 namespace App\EasyBundle\Message;
 
-use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 use Symfony\Component\Mime\Email;
 
-class SendContactEmailHandler implements MessageHandlerInterface
+class SendContactEmailHandler
 {
     private CONST EMAIL_FROM = 'from@example.com';
     private CONST EMAIL_TO = 'to@example.com';
@@ -25,7 +24,7 @@ class SendContactEmailHandler implements MessageHandlerInterface
             ->from(self::EMAIL_FROM)
             ->to(self::EMAIL_TO)
             ->subject(self::EMAIL_SUBJECT)
-            ->html($sendContactEmail->getHtml());
+            ->html($sendContactEmail->getBodyHtml());
 
         //$this->mailer->send($email);
     }

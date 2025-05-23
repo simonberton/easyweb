@@ -7,64 +7,50 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 
-/**
- * @ORM\Entity(repositoryClass="App\EasyBundle\Repository\ContactRepository")
- * @ORM\Table(name="easy_core_contact")
- */
+#[ORM\Table(name: 'easy_core_contact')]
+#[ORM\Entity(repositoryClass: \App\EasyBundle\Repository\ContactRepository::class)]
 class Contact
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(name="contact_id", type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(name: 'contact_id', type: 'integer')]
     private $id;
 
     /**
      * @Assert\NotBlank()
      * @Assert\Length(max=128)
-     * @ORM\Column(name="contact_name", type="string", length=128, nullable=false)
      */
+    #[ORM\Column(name: 'contact_name', type: 'string', length: 128, nullable: false)]
     private $name;
 
     /**
      * @Assert\NotBlank()
      * @Assert\Length(max=128)
      * @Assert\Email()
-     * @ORM\Column(name="contact_email", type="string", length=128, nullable=false)
      */
+    #[ORM\Column(name: 'contact_email', type: 'string', length: 128, nullable: false)]
     private $email;
 
-    /**
-     * @ORM\Column(name="contact_phone", type="string", length=32, nullable=true)
-     */
+    #[ORM\Column(name: 'contact_phone', type: 'string', length: 32, nullable: true)]
     private $phone;
 
-    /**
-     * @ORM\Column(name="contact_message", type="text", nullable=true)
-     */
+    #[ORM\Column(name: 'contact_message', type: 'text', nullable: true)]
     private $message;
 
-    /**
-     * @ORM\Column(name="contact_accepts_notifications", type="boolean", nullable=false)
-     */
+    #[ORM\Column(name: 'contact_accepts_notifications', type: 'boolean', nullable: false)]
     private $acceptsNotifications;
 
-    /**
-     * @ORM\Column(name="contact_extra_data", type="text", nullable=true)
-     */
+    #[ORM\Column(name: 'contact_extra_data', type: 'text', nullable: true)]
     private $extraData;
 
-    /**
-     * @ORM\Column(name="contact_is_read", type="boolean", nullable=true)
-     */
+    #[ORM\Column(name: 'contact_is_read', type: 'boolean', nullable: true)]
     private $isRead = false;
 
     /**
      * @Assert\DateTime()
      * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(name="contact_created_at", type="datetime", nullable=false)
      */
+    #[ORM\Column(name: 'contact_created_at', type: 'datetime', nullable: false)]
     private $createdAt;
 
     public function getId(): ?int

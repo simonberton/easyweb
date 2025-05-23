@@ -7,48 +7,40 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 
-/**
- * @ORM\Entity(repositoryClass="App\EasyBundle\Repository\AssetImageRepository")
- * @ORM\Table(name="easy_core_asset_image")
- */
+#[ORM\Table(name: 'easy_core_asset_image')]
+#[ORM\Entity(repositoryClass: \App\EasyBundle\Repository\AssetImageRepository::class)]
 class AssetImage
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(name="image_id", type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(name: 'image_id', type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(name="image_filename", type="string", length=128, nullable=false)
-     */
+    #[ORM\Column(name: 'image_filename', type: 'string', length: 128, nullable: false)]
     private $filename;
 
-    /**
-     * @ORM\Column(name="image_mime_type", type="string", length=32, nullable=false)
-     */
+    #[ORM\Column(name: 'image_mime_type', type: 'string', length: 32, nullable: false)]
     private $mimeType;
 
     /**
      * @Assert\DateTime()
      * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(name="image_created_at", type="datetime", nullable=false)
      */
+    #[ORM\Column(name: 'image_created_at', type: 'datetime', nullable: false)]
     private $createdAt;
 
     /**
      * @Assert\DateTime()
      * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(name="image_modified_at", type="datetime", nullable=false)
      */
+    #[ORM\Column(name: 'image_modified_at', type: 'datetime', nullable: false)]
     private $modifiedAt;
 
     /**
      * @Assert\Length(max=128)
      * @Gedmo\Blameable(on="create")
-     * @ORM\Column(name="image_created_by", type="string", length=128, nullable=true)
      */
+    #[ORM\Column(name: 'image_created_by', type: 'string', length: 128, nullable: true)]
     private $createdBy;
 
     public function __toString() : string

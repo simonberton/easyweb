@@ -9,10 +9,10 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
         
 /**
- * @ORM\Entity(repositoryClass="App\Repository\GeneradorRepository")
  * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
- * @ORM\Table(name="generador")
  */
+#[ORM\Table(name: 'generador')]
+#[ORM\Entity(repositoryClass: \App\Repository\GeneradorRepository::class)]
 class Generador extends User
 {
 
