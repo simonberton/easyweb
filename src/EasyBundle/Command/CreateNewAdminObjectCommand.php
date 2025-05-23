@@ -77,22 +77,19 @@ namespace App\Entity;
 use App\EasyBundle\Entity\BaseEntity;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\%sRepository")
- * @ORM\Table(name="%s")
- */
-class %s extends BaseEntity
+#[ORM\Entity(repositoryClass: "App\Repository\\%1$sRepository")]
+#[ORM\Table(name: "%2$s")]
+class %1$s extends BaseEntity
 {
-
 }
 ',
             $objectName,
-            strtolower($objectName),
-            $objectName
+            strtolower($objectName)
         );
 
         file_put_contents(sprintf('src/Entity/%s.php', $objectName), $entity);
     }
+
 
     protected function createRepository(string $objectName): void
     {
@@ -212,21 +209,17 @@ namespace App\Controller\Admin;
 
 use App\EasyBundle\Library\AbstractAdminController;
 use App\EasyBundle\Library\AbstractService;
-use App\Service\%sService;
+use App\Service\%1$sService;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @Route("/admin/%s", name="admin_%s_")
- */
-class %sController extends AbstractAdminController
+#[Route(path: "/admin/%2$s", name: "admin_%2$s_")]
+class %1$sController extends AbstractAdminController
 {
-    protected %sService $service;
-
-    public function __construct(%sService $service, TranslatorInterface $translator)
-    {
-        $this->service = $service;
-
+    public function __construct(
+        protected %1$sService $service,
+        TranslatorInterface $translator,
+    ) {
         parent::__construct($translator);
     }
 
@@ -242,15 +235,10 @@ class %sController extends AbstractAdminController
 
     protected function getRoutePrefix(): string
     {
-        return \'admin_%s\';
+        return \'admin_%2$s\';
     }
 }
 ',
-            $objectName,
-            strtolower($objectName),
-            strtolower($objectName),
-            $objectName,
-            $objectName,
             $objectName,
             strtolower($objectName)
         );
