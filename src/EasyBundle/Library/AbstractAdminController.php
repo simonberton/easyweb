@@ -48,7 +48,7 @@ abstract class AbstractAdminController extends BaseController
         return 20;
     }
 
-    protected function addEvent($event, \Closure $callback)
+    protected function addEvent($event, \Closure $callback): void
     {
         $this->events[$event] = $callback;
     }
@@ -208,19 +208,21 @@ abstract class AbstractAdminController extends BaseController
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            try {
-                $uploaderHelper->uploadAndSetImages($request, $entity);
-                $this->getService()->edit($entity);
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                try {
+                    $uploaderHelper->uploadAndSetImages($request, $entity);
+                    $this->getService()->edit($entity);
 
-                $this->addFlash('cms_success', $this->trans('edit_success', [], $this->getTranslatorPrefix()));
+                    $this->addFlash('cms_success', $this->trans('edit_success', [], $this->getTranslatorPrefix()));
 
-                return $this->redirectToRoute($this->getRoutePrefix() . '_index');
-            } catch (\Exception $e) {
-                $this->addFlash('cms_error', $this->trans('edit_error', [], $this->getTranslatorPrefix()));
+                    return $this->redirectToRoute($this->getRoutePrefix() . '_index');
+                } catch (\Exception $e) {
+                    $this->addFlash('cms_error', $this->trans('edit_error', [], $this->getTranslatorPrefix()));
+                }
+            } else {
+                $this->addFlash('cms_error', $this->getFormErrorMessagesList($form));
             }
-        } else {
-            $this->addFlash('cms_error', $this->getFormErrorMessagesList($form));
         }
 
         return $this->render(

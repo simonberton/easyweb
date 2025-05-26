@@ -143,7 +143,7 @@ abstract class AbstractService
      *
      * @return object|null
      */
-    public function get(int $id)
+    public function get(int $id): ?object
     {
         return $this->repository->findOneBy(['id' => $id]);
     }
@@ -151,7 +151,7 @@ abstract class AbstractService
     /**
      * @throws \Exception
      */
-    public function delete($entity)
+    public function delete($entity): void
     {
         if (get_class($entity) !== $this->getEntityClass()) {
             throw new \Exception(sprintf('This service only handles "%s" but "%s" was provided.', $this->getEntityClass(), get_class($entity)));
